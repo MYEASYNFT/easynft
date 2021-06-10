@@ -1,0 +1,63 @@
+{
+  "name": "egg-easynft",
+  "version": "1.0.0",
+  "description": "easynft eggjs plugin",
+  "eggPlugin": {
+    "name": "easynft",
+    "dependencies":["egg-multipart"]
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin"
+  ],
+  "dependencies": {
+    "cids": "^1.1.6",
+    "http-errors": "^1.8.0",
+    "multihashes": "^4.0.2",
+    "sdk-base": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg": "^2.16.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "eslint": "^5.13.0",
+    "eslint-config-egg": "^7.1.0",
+    "typescript": "^4.3.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
+    "pkgfiles": "egg-bin pkgfiles",
+    "autod": "autod"
+  },
+  "files": [
+    "app",
+    "config",
+    "agent.js",
+    "app.js"
+  ],
+  "ci": {
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggjs/egg-easynft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eggjs/egg/issues"
+  },
+  "homepage": "https://github.com/eggjs/egg-easynft#readme",
+  "author": "kiba.x.zhao",
+  "license": "MIT"
+}
