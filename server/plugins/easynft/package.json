@@ -4,7 +4,9 @@
   "description": "easynft eggjs plugin",
   "eggPlugin": {
     "name": "easynft",
-    "dependencies":["egg-multipart"]
+    "dependencies": [
+      "multipart"
+    ]
   },
   "keywords": [
     "egg",
@@ -18,6 +20,7 @@
     "sdk-base": "^3.6.0"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.6",
     "@types/node": "^15.12.2",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
@@ -27,6 +30,8 @@
     "egg-mock": "^3.21.0",
     "eslint": "^5.13.0",
     "eslint-config-egg": "^7.1.0",
+    "faker": "^5.5.3",
+    "nock": "^13.1.0",
     "typescript": "^4.3.2"
   },
   "engines": {
@@ -44,8 +49,8 @@
   "files": [
     "app",
     "config",
-    "agent.js",
-    "app.js"
+    "app.js",
+    "lib"
   ],
   "ci": {
     "version": "8, 10"

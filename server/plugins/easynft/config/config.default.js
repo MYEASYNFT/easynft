@@ -6,19 +6,17 @@
  * @property {String} SOME_KEY - some description
  */
 exports.easynft = {
-  easynft:{
-    prefix:'/easynft',
-    maxtrix_storage:{
-      host:'http://teststc-api.atpool.com',
-      bucket_name:'nft_bucket'
-    },
-    multihashes:{
-      algorithm:'sha256',
-      version:1,
-      codec:'dap-pb',
-      multibaseName:'base64'
-    }
-  }
+  prefix: '/easynft',
+  maxtrix_storage: {
+    host: 'http://teststc-api.atpool.com',
+    bucket_name: '$nft',
+  },
+  multihashes: {
+    algorithm: 'sha256',
+    version: 1,
+    codec: 'dap-pb',
+    multibaseName: 'base64',
+  },
 };
 
 exports.customLoader = {
@@ -31,9 +29,9 @@ exports.customLoader = {
     loadunit: true,
     // 还可以定义其他 LoaderOptions
     caseStyle: 'upper',
-  }
+  },
 };
 
 exports.multipart = {
-  mode: 'file'
+  mode: 'file',
 };

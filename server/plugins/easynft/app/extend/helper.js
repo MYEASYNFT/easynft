@@ -11,7 +11,7 @@ const multihashes = require('multihashes');
 const CID = require('cids');
 
 const crypto = require('crypto');
-const {Readable} = require('stream');
+const { Readable } = require('stream');
 
 // const ALGORITHM = 'sha256';
 // const VERSION = 1;
@@ -23,11 +23,11 @@ async function generateCID(data) {
   const hash = crypto.createHash(opts.algorithm);
   if (Buffer.isBuffer(data)) {
     hash.update(data);
-  }else if (data instanceof Readable){
-    for await (let chunk of stream) {
+  } else if (data instanceof Readable) {
+    for await (const chunk of data) {
       hash.update(chunk);
     }
-  }else{
+  } else {
     throw new Error('UNSUPPORT_DATA');
   }
   const buffer = hash.digest();
@@ -35,20 +35,20 @@ async function generateCID(data) {
   const content = multihashes.encode(buffer, opts.hashName);
   const cid = new CID(opts.version, opts.codec, content, opts.multibaseName);
   return cid.toString();
-  
+
 }
 
-function generateMatrixStorageAPIHeaders(headers={}) {
-  const {ctx} = this;  
-  
+function generateMatrixStorageAPIHeaders(headers = {}) {
+  const { ctx } = this;
+
   return {
-    'Content-Type':'application/x-www-form-urlencoded',
-    From:'openapi',
-    AppVersion:ctx.headers['AppVersion'],
-    AppId:ctx.headers['AppId'],
-    Signature:ctx.headers['Signature'],
-    ...headers
-  }; 
+    'Content-Type': 'application/x-www-form-urlencoded',
+    From: 'openapi',
+    AppVersion: ctx.headers.AppVersion,
+    AppId: ctx.headers.AppId,
+    Signature: ctx.headers.Signature,
+    ...headers,
+  };
 }
 
 function throwMatrixStorageAPIError(resp) {
@@ -57,18 +57,18 @@ function throwMatrixStorageAPIError(resp) {
   }
 
   let error;
-  if (resp.code>=400 && resp.code<600) {
-    error = createError(resp.code,resp.msg);
-  }else{
-    error = createError(409,resp.msg);
+  if (resp.code >= 400 && resp.code < 600) {
+    error = createError(resp.code, resp.msg);
+  } else {
+    error = createError(409, resp.msg);
   }
   error.biz_code = resp.code;
   throw error;
 }
 
 function throwHttpError(res) {
-  if (res.status>=400 && res.status<600) {
-    throw createError(res.status,res.data);
+  if (res.status >= 400 && res.status < 600) {
+    throw createError(res.status, res.data);
   }
 }
 
