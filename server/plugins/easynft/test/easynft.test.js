@@ -14,6 +14,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
   let app,
     config;
+
   before(async () => {
     app = mock.app({
       baseDir: 'apps/easynft-test',
@@ -25,9 +26,98 @@ describe('egg-plugin:easynft.test.js', () => {
   after(() => app.close());
   afterEach(mock.restore);
 
+  const complete_status = [ 11, 0, 1, 2, 3, 5 ];
+  const pending_status = [ 6, 9, 8, 10 ];
+
   describe('GET /easynft', () => {
 
     it('success', async () => {
+
+      const appId = faker.datatype.string(16);
+      const appVersion = faker.datatype.string(8);
+      const signature = faker.datatype.string(64);
+      const from = 'openapi';
+      const file_name = 'metadata.json';
+
+      const page = faker.datatype.number();
+      const size = faker.datatype.number();
+
+      const res = [];
+      const items = [];
+      for (let i = 12; i > 0; i--) {
+
+        const file_status = i % 2 === 1 ? complete_status : pending_status;
+        const cid = faker.datatype.hexaDecimal(32);
+        const file = { cid, store_host: faker.internet.url(), status: file_status[faker.datatype.number(file_status.length - 1)] };
+        const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
+
+        const imageFile_status = i % 3 === 1 ? complete_status : pending_status;
+        const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: imageFile_status[faker.datatype.number(imageFile_status.length - 1)] };
+
+        const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: { files: [ image ] } };
+
+        items.push(file);
+        const entity = { cid, status: file_status === complete_status && imageFile_status === complete_status ? 'complete' : 'pending' };
+
+        if (file_status === complete_status) {
+
+          entity.metadata = metadata;
+          nock(file.store_host, {
+            from,
+            appid: appId,
+            appversion: appVersion,
+            signature,
+          })
+            .get('/store/openapi/v1/download_file')
+            .query({
+              bucket_name: config.maxtrix_storage.bucket_name,
+              cid,
+            })
+            .reply(200, Buffer.from(JSON.stringify(metadata)), { 'Content-Disposition': `attachment; filename="${image.filename}"` });
+
+          nock(config.maxtrix_storage.host, {
+            'content-type': 'application/x-www-form-urlencoded',
+            from,
+            appid: appId,
+            appversion: appVersion,
+            signature,
+          })
+            .post('/store/openapi/v1/file_detail', {
+              bucket_name: config.maxtrix_storage.bucket_name,
+              cid: image.cid,
+              page_index: 1,
+              page_size: 1,
+            }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
+
+        }
+
+        res.push(entity);
+      }
+
+      nock(config.maxtrix_storage.host, {
+        'content-type': 'application/x-www-form-urlencoded',
+        from,
+        appid: appId,
+        appversion: appVersion,
+        signature,
+      })
+        .post('/store/openapi/v1/bucket_files_list', {
+          bucket_name: config.maxtrix_storage.bucket_name,
+          search_name: file_name,
+          page,
+          size,
+        }).reply(200, { code: 0, msg: 'ok', data: { items } });
+
+      app.mockHeaders({
+        AppId: appId,
+        AppVersion: appVersion,
+        Signature: signature,
+      });
+
+      await app.httpRequest()
+        .get(config.prefix)
+        .query({ page, size })
+        .expect(200, res);
 
     });
 
@@ -35,7 +125,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
   describe('GET /easynft/:cid', () => {
 
-    it('success', async () => {
+    it('complete', async () => {
 
       const cid = faker.datatype.hexaDecimal(32);
       const appId = faker.datatype.string(16);
@@ -43,12 +133,11 @@ describe('egg-plugin:easynft.test.js', () => {
       const signature = faker.datatype.string(64);
       const from = 'openapi';
       const file_name = 'metadata.json';
-      const success_status = [ 11, 0, 1, 2, 3, 5 ];
-      const file = { cid, store_host: faker.internet.url(), status: success_status[faker.datatype.number(success_status.length - 1)] };
+      const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
       const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
-      const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: success_status[faker.datatype.number(success_status.length - 1)] };
+      const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
 
-      const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: {files:[ image ]} };
+      const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: { files: [ image ] } };
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',
@@ -94,18 +183,120 @@ describe('egg-plugin:easynft.test.js', () => {
         }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
 
       app.mockHeaders({
-        AppId:appId,
-        AppVersion:appVersion,
-        Signature:signature,        
+        AppId: appId,
+        AppVersion: appVersion,
+        Signature: signature,
       });
 
       await app.httpRequest()
-        // .set('AppId', appId)
-        // .set('AppVersion', appVersion)
-        // .set('Signature', signature)
         .get(`${config.prefix}/${cid}`)
         .expect(200, { cid, metadata, status: 'complete' });
     });
+
+    it('pending', async () => {
+
+      const cid = faker.datatype.hexaDecimal(32);
+      const appId = faker.datatype.string(16);
+      const appVersion = faker.datatype.string(8);
+      const signature = faker.datatype.string(64);
+      const from = 'openapi';
+      const file_name = 'metadata.json';
+      const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
+      const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
+      const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)] };
+
+      const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: { files: [ image ] } };
+
+      nock(config.maxtrix_storage.host, {
+        'content-type': 'application/x-www-form-urlencoded',
+        from,
+        appid: appId,
+        appversion: appVersion,
+        signature,
+      })
+        .post('/store/openapi/v1/file_detail', {
+          bucket_name: config.maxtrix_storage.bucket_name,
+          cid,
+          file_name,
+          page_index: 1,
+          page_size: 1,
+        }).reply(200, { code: 0, msg: 'ok', data: [ file ] });
+
+
+      nock(file.store_host, {
+        from,
+        appid: appId,
+        appversion: appVersion,
+        signature,
+      })
+        .get('/store/openapi/v1/download_file')
+        .query({
+          bucket_name: config.maxtrix_storage.bucket_name,
+          cid,
+        })
+        .reply(200, Buffer.from(JSON.stringify(metadata)), { 'Content-Disposition': `attachment; filename="${image.filename}"` });
+
+      nock(config.maxtrix_storage.host, {
+        'content-type': 'application/x-www-form-urlencoded',
+        from,
+        appid: appId,
+        appversion: appVersion,
+        signature,
+      })
+        .post('/store/openapi/v1/file_detail', {
+          bucket_name: config.maxtrix_storage.bucket_name,
+          cid: image.cid,
+          page_index: 1,
+          page_size: 1,
+        }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
+
+      app.mockHeaders({
+        AppId: appId,
+        AppVersion: appVersion,
+        Signature: signature,
+      });
+
+      await app.httpRequest()
+        .get(`${config.prefix}/${cid}`)
+        .expect(200, { cid, metadata, status: 'pending' });
+    });
+
+    it('pending without metadata', async () => {
+
+      const cid = faker.datatype.hexaDecimal(32);
+      const appId = faker.datatype.string(16);
+      const appVersion = faker.datatype.string(8);
+      const signature = faker.datatype.string(64);
+      const from = 'openapi';
+      const file_name = 'metadata.json';
+      const file = { cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)] };
+
+      nock(config.maxtrix_storage.host, {
+        'content-type': 'application/x-www-form-urlencoded',
+        from,
+        appid: appId,
+        appversion: appVersion,
+        signature,
+      })
+        .post('/store/openapi/v1/file_detail', {
+          bucket_name: config.maxtrix_storage.bucket_name,
+          cid,
+          file_name,
+          page_index: 1,
+          page_size: 1,
+        }).reply(200, { code: 0, msg: 'ok', data: [ file ] });
+
+      app.mockHeaders({
+        AppId: appId,
+        AppVersion: appVersion,
+        Signature: signature,
+      });
+
+      await app.httpRequest()
+        .get(`${config.prefix}/${cid}`)
+        .expect(200, { cid, status: 'pending' });
+    });
+
 
   });
 

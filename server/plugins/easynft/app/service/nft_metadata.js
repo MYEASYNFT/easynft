@@ -115,7 +115,11 @@ class NFTMetadataService extends Service {
 
   }
 
-  async getOne({ cid, store_host }) {
+  async getOne({ cid, store_host, ...opts }) {
+
+    if (PENDING_STATUS.includes(opts.status)) {
+      return { cid, status: 'pending' };
+    }
 
     const { ctx, config } = this;
 
@@ -153,7 +157,7 @@ class NFTMetadataService extends Service {
       page_size: 1,
     });
 
-    if (!metadataStat || PENDING_STATUS.includes(metadataStat.status)) {
+    if (!metadataStat) {
       return null;
     }
 
@@ -163,12 +167,12 @@ class NFTMetadataService extends Service {
   async find(conditions) {
 
     const { config, ctx } = this;
-    const stats = await ctx.httpAPI.MatrixStorage.file_detail({
-      page_index: 1,
-      page_size: 10,
+    const stats = await ctx.httpAPI.MatrixStorage.bucket_files_list({
+      page: 1,
+      size: 10,
       ...conditions,
       bucket_name: config.easynft.maxtrix_storage.bucket_name,
-      file_name: 'metadata.json',
+      search_name: 'metadata.json',
     });
 
     if (stats.length <= 0) {

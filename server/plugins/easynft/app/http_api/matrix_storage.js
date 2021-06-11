@@ -10,12 +10,29 @@ const { Service: API } = require('egg');
 
 class MatrixStorageAPI extends API {
 
+  async bucket_files_list(condition) {
+
+    const { ctx, app, config } = this;
+    const headers = ctx.helper.generateMatrixStorageAPIHeaders();
+    const res = await app.curl(`${config.easynft.maxtrix_storage.host}/store/openapi/v1/bucket_files_list`, {
+      dataType: 'json',
+      method: 'POST',
+      headers,
+      data: condition,
+    });
+    ctx.helper.throwHttpError(res);
+
+    const resp = res.data;
+    ctx.helper.throwMatrixStorageAPIError(resp);
+    return resp.data.items;
+  }
+
   async file_detail(condition) {
 
     const { ctx, app, config } = this;
     const headers = ctx.helper.generateMatrixStorageAPIHeaders();
     const res = await app.curl(`${config.easynft.maxtrix_storage.host}/store/openapi/v1/file_detail`, {
-      dataType:'json',
+      dataType: 'json',
       method: 'POST',
       headers,
       data: condition,
@@ -32,7 +49,7 @@ class MatrixStorageAPI extends API {
     const { ctx, app, config } = this;
     const headers = ctx.helper.generateMatrixStorageAPIHeaders();
     const res = await app.curl(`${config.easynft.maxtrix_storage.host}/store/openapi/v1/ask_for_upload_credential`, {
-      dataType:'json',
+      dataType: 'json',
       method: 'POST',
       headers,
       data: params,
@@ -60,7 +77,7 @@ class MatrixStorageAPI extends API {
     const res = await app.curl(`${params.store_host}/store/openapi/v1/upload_file`, {
       method: 'POST',
       headers,
-      dataType:'json',
+      dataType: 'json',
       files: [ content ],
     });
     ctx.helper.throwHttpError(res);
