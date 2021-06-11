@@ -6,11 +6,14 @@
  */
 'use strict';
 
+const JSONbig = require('json-bigint');
 
 async function index(ctx) {
 
   const res = await ctx.service.nftMetadata.find(ctx.query);
-  ctx.body = res;
+
+  ctx.set('Content-Type','application/json');
+  ctx.body = JSONbig.stringify(res);
 
 }
 
@@ -18,7 +21,9 @@ async function get(ctx) {
 
   const res = await ctx.service.nftMetadata.findOne(ctx.params.cid);
   if (!res) { return; }
-  ctx.body = res;
+
+  ctx.set('Content-Type','application/json');
+  ctx.body = JSONbig.stringify(res);
 
 }
 
@@ -39,7 +44,8 @@ async function post(ctx) {
 
   if (!res) { return; }
 
-  ctx.body = res;
+  ctx.set('Content-Type','application/json');
+  ctx.body = JSONbig.stringify(res);;
   ctx.status = 201;
 
 }

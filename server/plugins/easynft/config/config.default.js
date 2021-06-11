@@ -13,8 +13,9 @@ exports.easynft = {
   },
   multihashes: {
     algorithm: 'sha256',
+    hashName:'sha2-256',
     version: 1,
-    codec: 'dap-pb',
+    codec: 'dag-pb',
     multibaseName: 'base64',
   },
 };
