@@ -15,7 +15,7 @@ exports.easynft = {
       'Content-Type': 'application/x-www-form-urlencoded',
       From: 'openapi',
     },
-    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ],
+    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_=>_.toLowerCase()),
   },
   multihashes: {
     algorithm: 'sha256',

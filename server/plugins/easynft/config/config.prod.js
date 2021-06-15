@@ -31,7 +31,7 @@ module.exports = () => {
   }
 
   if (process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS) {
-    config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',');
+    config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',').map(_=>_.toLowerCase());
   }
 
   return {
