@@ -6,14 +6,20 @@
  * @property {String} SOME_KEY - some description
  */
 exports.easynft = {
-  prefix: '/easynft',
+  basePath: '/easynft',
   maxtrix_storage: {
     host: 'http://teststc-api.atpool.com',
-    bucket_name: '$nft',
+    basePath: '/store/openapi',
+    bucketName: '$nft',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      From: 'openapi',
+    },
+    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ],
   },
   multihashes: {
     algorithm: 'sha256',
-    hashName:'sha2-256',
+    hashName: 'sha2-256',
     version: 1,
     codec: 'dag-pb',
     multibaseName: 'base64',

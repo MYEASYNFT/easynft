@@ -183,13 +183,13 @@ Date: Wed, 22 Feb 2012 08:32:21 GMT
 
 #### REQUEST FIELDS & FILES ####
 
-| Name        | Required                     | Type   | Description                        |
-|-------------|------------------------------|--------|------------------------------------|
-| name        | no                           | string | name of nft                        |
-| description | no                           | string | description of nft                 |
-| decimals    | no                           | string | decimals of nft                    |
-| properties  | no                           | object | properties of nft                  |
-| file        | <font color="red">yes</font> | file   | File Object of multipart/form-data |
+| Name        | Required                     | Type            | Description                        |
+|-------------|------------------------------|-----------------|------------------------------------|
+| name        | no                           | string          | name of nft                        |
+| description | no                           | string          | description of nft                 |
+| decimals    | no                           | number (bigint) | decimals of nft                    |
+| properties  | no                           | object          | properties of nft                  |
+| file        | <font color="red">yes</font> | file            | File Object of multipart/form-data |
 
 
 #### RESPONSE ####

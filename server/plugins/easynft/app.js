@@ -18,9 +18,9 @@ class AppBootHook {
     const config = app.config.easynft;
     const router = this.app.router;
 
-    router.get(`${config.prefix}`, httpHandler.index);
-    router.get(`${config.prefix}/:cid`, httpHandler.get);
-    router.post(`${config.prefix}`, httpHandler.post);
+    router.get(`${config.basePath}`, httpHandler.index);
+    router.get(`${config.basePath}/:cid`, httpHandler.get);
+    router.post(`${config.basePath}`, httpHandler.post);
   }
 }
 

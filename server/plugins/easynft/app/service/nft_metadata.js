@@ -44,7 +44,7 @@ class NFTMetadataService extends Service {
     const cid = await ctx.helper.generateCID(metadata_buffer);
 
     const [ metadataStat ] = await await ctx.httpAPI.MatrixStorage.file_detail({
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       cid,
       file_name: 'metadata.json',
       page_index: 1,
@@ -58,7 +58,7 @@ class NFTMetadataService extends Service {
     promises.push(this.upload(cid, metadata_buffer));
     await Promise.all(promises);
 
-    return { cid, metadata,status: 'pending' };
+    return { cid, metadata, status: 'pending' };
   }
 
   async upload(cid, data) {
@@ -77,10 +77,10 @@ class NFTMetadataService extends Service {
       file_type = 'application/json';
     } else {
       const info_list = await ctx.httpAPI.MatrixStorage.file_detail({
-        bucket_name: config.easynft.maxtrix_storage.bucket_name,
+        bucket_name: config.easynft.maxtrix_storage.bucketName,
         cid,
         page_index: 1,
-        page_size: 1,        
+        page_size: 1,
       });
       info = info_list[0];
       const stat = await fs.promises.stat(data.filepath);
@@ -96,7 +96,7 @@ class NFTMetadataService extends Service {
     }
 
     const { store_host, credential, event_id } = await ctx.httpAPI.MatrixStorage.ask_for_upload_credential({
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       file_name,
       is_verified: 0,
       file_size,
@@ -104,7 +104,7 @@ class NFTMetadataService extends Service {
 
     await ctx.httpAPI.MatrixStorage.upload_file(file_content, {
       credential,
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       file_type,
       file_name,
       is_verified: 0,
@@ -127,7 +127,7 @@ class NFTMetadataService extends Service {
     const { ctx, config } = this;
 
     const metadata_buffer = await ctx.httpAPI.MatrixStorage.download_file({
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       cid,
       store_host,
     });
@@ -136,7 +136,7 @@ class NFTMetadataService extends Service {
     let status = 'complete';
     for (const file of metadata.properties.files) {
       const [ stat ] = await ctx.httpAPI.MatrixStorage.file_detail({
-        bucket_name: config.easynft.maxtrix_storage.bucket_name,
+        bucket_name: config.easynft.maxtrix_storage.bucketName,
         cid: file.cid,
         page_index: 1,
         page_size: 1,
@@ -153,7 +153,7 @@ class NFTMetadataService extends Service {
     const { config, ctx } = this;
 
     const [ metadataStat ] = await ctx.httpAPI.MatrixStorage.file_detail({
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       cid,
       file_name: 'metadata.json',
       page_index: 1,
@@ -174,7 +174,7 @@ class NFTMetadataService extends Service {
       page: 1,
       size: 10,
       ...conditions,
-      bucket_name: config.easynft.maxtrix_storage.bucket_name,
+      bucket_name: config.easynft.maxtrix_storage.bucketName,
       search_name: 'metadata.json',
     });
 

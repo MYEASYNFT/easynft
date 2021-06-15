@@ -39,14 +39,21 @@ async function generateCID(data) {
 }
 
 function generateMatrixStorageAPIHeaders(headers = {}) {
-  const { ctx } = this;
+  const { ctx, config } = this;
+
+  const default_headers = config.easynft.maxtrix_storage.headers || {};
+  const proxy_header_keys = config.easynft.maxtrix_storage.proxyHeaders || [];
+  const proxy_headers = {};
+
+  for (const key of proxy_header_keys) {
+    if (ctx.headers[key] !== undefined) {
+      proxy_headers[key] = ctx.headers[key];
+    }
+  }
 
   return {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    From: 'openapi',
-    AppVersion: ctx.headers.AppVersion,
-    AppId: ctx.headers.AppId,
-    Signature: ctx.headers.Signature,
+    ...default_headers,
+    ...proxy_headers,
     ...headers,
   };
 }
