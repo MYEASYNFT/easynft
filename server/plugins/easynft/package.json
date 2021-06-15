@@ -14,8 +14,10 @@
     "egg-plugin"
   ],
   "dependencies": {
+    "bignumber.js": "^9.0.1",
     "cids": "^1.1.6",
     "http-errors": "^1.8.0",
+    "json-bigint": "^1.0.0",
     "multihashes": "^4.0.2",
     "sdk-base": "^3.6.0"
   },
