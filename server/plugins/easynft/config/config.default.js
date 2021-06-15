@@ -20,10 +20,15 @@ exports.easynft = {
   multihashes: {
     algorithm: 'sha256',
     hashName: 'sha2-256',
-    version: 1,
+    version: 0,
     codec: 'dag-pb',
-    multibaseName: 'base64',
+    multibaseName: 'base58btc'
   },
+  ipfs:{
+    url:'http://st-ipfsmanager.bingheyc.com',
+    pin: true,
+    chunker: 'size-1048576'
+  }
 };
 
 exports.customLoader = {

@@ -46,7 +46,7 @@ class NFTMetadataService extends Service {
     const [ metadataStat ] = await await ctx.httpAPI.MatrixStorage.file_detail({
       bucket_name: config.easynft.maxtrix_storage.bucketName,
       cid,
-      file_name: 'metadata.json',
+      file_name: 'metadata',
       page_index: 1,
       page_size: 1,
     });
@@ -71,7 +71,7 @@ class NFTMetadataService extends Service {
       file_content,
       file_type;
     if (Buffer.isBuffer(data)) {
-      file_name = 'metadata.json';
+      file_name = 'metadata';
       file_size = data.byteLength;
       file_content = data;
       file_type = 'application/json';
@@ -146,6 +146,7 @@ class NFTMetadataService extends Service {
         break;
       }
     }
+
     return { cid, metadata, status };
   }
 
@@ -155,7 +156,7 @@ class NFTMetadataService extends Service {
     const [ metadataStat ] = await ctx.httpAPI.MatrixStorage.file_detail({
       bucket_name: config.easynft.maxtrix_storage.bucketName,
       cid,
-      file_name: 'metadata.json',
+      file_name: 'metadata',
       page_index: 1,
       page_size: 1,
     });
@@ -175,14 +176,15 @@ class NFTMetadataService extends Service {
       size: 10,
       ...conditions,
       bucket_name: config.easynft.maxtrix_storage.bucketName,
-      search_name: 'metadata.json',
+      search_name: 'metadata',
     });
 
     if (stats.length <= 0) {
       return stats;
     }
 
-    return await Promise.all(stats.map(_ => this.getOne(_)));
+    const res = await Promise.all(stats.map(_ => this.getOne(_)));
+    return res;
   }
 }
 

@@ -7,34 +7,37 @@
 'use strict';
 
 const createError = require('http-errors');
-const multihashes = require('multihashes');
-const CID = require('cids');
+// const multihashes = require('multihashes');
+// const CID = require('cids');
+const {create:createClient} = require('ipfs-http-client');
 
-const crypto = require('crypto');
-const { Readable } = require('stream');
-
-// const ALGORITHM = 'sha256';
-// const VERSION = 1;
-// const CODEC = 'dap-pb';
+// const crypto = require('crypto');
+// const { Readable } = require('stream');
 
 async function generateCID(data) {
 
-  const opts = this.config.easynft.multihashes;
-  const hash = crypto.createHash(opts.algorithm);
-  if (Buffer.isBuffer(data)) {
-    hash.update(data);
-  } else if (data instanceof Readable) {
-    for await (const chunk of data) {
-      hash.update(chunk);
-    }
-  } else {
-    throw new Error('UNSUPPORT_DATA');
-  }
-  const buffer = hash.digest();
+  const {url,...opts} = this.config.easynft.ipfs;
+  const client = createClient(url);
+  const res = await client.add(data,opts);
+  return res.path;
+  
+  /// TODO: generate cid in local
+  // const opts = this.config.easynft.multihashes;
+  // const hash = crypto.createHash(opts.algorithm);
+  // if (Buffer.isBuffer(data)) {
+  //   hash.update(data);
+  // } else if (data instanceof Readable) {
+  //   for await (const chunk of data) {
+  //     hash.update(chunk);
+  //   }
+  // } else {
+  //   throw new Error('UNSUPPORT_DATA');
+  // }
+  // const buffer = hash.digest();
 
-  const content = multihashes.encode(buffer, opts.hashName);
-  const cid = new CID(opts.version, opts.codec, content, opts.multibaseName);
-  return cid.toString();
+  // const content = multihashes.encode(buffer, opts.hashName);
+  // const cid = new CID(opts.version, opts.codec, content, opts.multibaseName);
+  // return cid.toString();
 
 }
 
