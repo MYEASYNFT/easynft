@@ -1,8 +1,8 @@
-exports = {
-    APP_ID: '',
-    APP_SECRET: '',
-    APP_VERSION: '',
-    HOST: 'http://localhost:8080',
+module.exports = {
+    APP_ID: 'xxx',
+    APP_SECRET: 'xxx',
+    APP_VERSION: '1.0.0',
+    HOST: 'http://localhost:7001',
     // 请求超时时间，单位毫秒
     HTTP_TIME_OUT: 30 * 1000,
 }

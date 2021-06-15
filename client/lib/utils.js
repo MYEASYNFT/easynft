@@ -11,6 +11,6 @@ function createSignature(appsecret) {
     return signature;
 }
 
-exports ={
+module.exports = {
     createSignature
 }

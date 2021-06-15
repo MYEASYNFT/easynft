@@ -103,11 +103,11 @@ async function getOne(params) {
 /**
  *
  * @param {
- *     file: stirng  required
+ *     file: file object  required
  *     name: stirng
  *     description: stirng
- *     decimals: stirng
- *     properties: stirng
+ *     decimals: big int
+ *     properties: object
  * }
  * @returns {Promise<
  * {
@@ -131,27 +131,27 @@ async function getOne(params) {
  */
 async function add(params) {
     const { file, name, description, decimals, properties } = params;
+    const otherParams = { name, description, decimals, properties };
     const path = '/easynft';
     const options = {};
     if (!file) {
         throw new Exception(4001, 'params file is requred');
     }
     try {
-        console.debug(`start add() param:${JSON.stringify({ params, options })}`);
-        const data = await client.upload(path, params, options);
-        console.debug(`end add() param:${JSON.stringify({ params, options })} result:${JSON.stringify(data)}`);
+        console.debug(`start add() param:${JSON.stringify({ params: otherParams, options })}`);
+        const data = await client.upload(path, file, otherParams, options);
+        console.debug(`end add() param:${JSON.stringify({ otherParams, options })} result:${JSON.stringify(data)}`);
         return data;
     } catch (error) {
         console.error('error add() error:', JSON.stringify({
             path,
-            params,
+            params: otherParams,
             options,
-            error
-        }));
+        }), { 'error-code': error.code });
     }
 }
 
-exports ={
+module.exports ={
     getAll,
     getOne,
     add

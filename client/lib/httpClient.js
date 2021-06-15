@@ -1,10 +1,9 @@
-const Request = require('request');
-const util = require('util');
-const request = util.promisify(Request);
+const request = require('request');
 const { createSignature } = require('./utils');
-const Exception = request('./exception');
+const Exception = require('./exception');
+const JSONbig = require('json-bigint');
 
-export class HttpClient {
+module.exports = class {
     constructor(config) {
         if (!config.APP_ID) {
             throw new Exception(4000,"config APP_ID is requred");
@@ -37,59 +36,80 @@ export class HttpClient {
         const opts = options || {};
         const optHeaders = opts.headers || {};
         const headers = Object.assign(this.createBaseHeader(), optHeaders);
-        const { error, response, body } = request({
-            baseUrl: this.host,
-            url: url,
-            method: "GET",
-            timeout: this.timeout,
-            headers: headers,
-            form: params || {},
+        return new Promise((resolve, reject) => {
+            request({
+                baseUrl: this.host,
+                url: url,
+                method: "GET",
+                timeout: this.timeout,
+                headers: headers,
+                form: params || {},
+            }, (error, response, body) => {
+                try {
+                    this.errorCheck(error, response, body);
+                    resolve(JSONbig.parse(body))
+                } catch (error) {
+                    reject(error);
+                }
+            });
         });
-
-        this.errorCheck(error, response, body);
-        return JSON.parse(body);
     }
 
     async post(url, params, options) {
         const opts = options || {};
         const optHeaders = opts.headers || {};
         const headers = Object.assign(this.createBaseHeader(), optHeaders);
-        const { error, response, body } = request({
-            baseUrl: this.host,
-            url: url,
-            method: "POST",
-            timeout: this.timeout,
-            headers: headers,
-            body: params || {},
-            json: true,
+        return new Promise((resolve, reject) => {
+            request({
+                baseUrl: this.host,
+                url: url,
+                method: "POST",
+                timeout: this.timeout,
+                headers: headers,
+                body: params || {},
+            }, (error, response, body) => {
+                try {
+                    this.errorCheck(error, response, body);
+                    resolve(JSONbig.parse(body))
+                } catch (error) {
+                    reject(error);
+                }
+            });
         });
-
-        this.errorCheck(error, response, body);
-        return body;
     }
 
-    async upload(url, params, options) {
-        const { file, ...otherParams } = params;
+    async upload(url, file, params, options) {
         if (!file) {
             throw new Exception(4001, 'params file is requred');
         }
+        const { name, description, decimals, properties } = params;
         const opts = options || {};
         const optHeaders = opts.headers || {};
         const headers = Object.assign(this.createBaseHeader(), optHeaders);
-        const { error, response, body } = request({
-            baseUrl: this.host,
-            url: url,
-            method: "POST",
-            timeout: this.timeout,
-            headers: headers,
-            formData: {
-                ...otherParams,
-                file: file
-            },
+        return new Promise((resolve, reject) => {
+            request({
+                baseUrl: this.host,
+                url: url,
+                method: "POST",
+                timeout: this.timeout,
+                headers: headers,
+                formData: {
+                    file,
+                    name,
+                    description,
+                    decimals,
+                    properties: JSON.stringify(properties || {}),
+                },
+            }, (error, response, body) => {
+                try {
+                    console.log('-----------------------------')
+                    this.errorCheck(error, response, body);
+                    resolve(JSONbig.parse(body))
+                } catch (error) {
+                    reject(error);
+                }
+            });
         });
-
-        this.errorCheck(error, response, body);
-        return JSON.parse(body);
     }
 
     errorCheck(error, response, body) {
