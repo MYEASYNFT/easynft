@@ -147,7 +147,7 @@ async function add(params) {
             path,
             params: otherParams,
             options,
-        }), { 'error-code': error.code });
+        }), { error: error && error.code == 403 ? 'unauthorized' : error });
     }
 }
 

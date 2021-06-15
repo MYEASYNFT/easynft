@@ -95,9 +95,9 @@ module.exports = class {
                 headers: headers,
                 formData: {
                     file,
-                    name,
-                    description,
-                    decimals,
+                    name: name || '',
+                    description: description || '',
+                    decimals: decimals || 0,
                     properties: JSON.stringify(properties || {}),
                 },
             }, (error, response, body) => {
