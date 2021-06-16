@@ -46,4 +46,5 @@ exports.customLoader = {
 
 exports.multipart = {
   mode: 'file',
+  fileSize: '100mb',
 };
