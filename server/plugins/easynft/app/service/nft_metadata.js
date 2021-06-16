@@ -172,8 +172,8 @@ class NFTMetadataService extends Service {
 
     const { config, ctx } = this;
     const stats = await ctx.httpAPI.MatrixStorage.bucket_files_list({
-      page: 1,
-      size: 10,
+      page_index: 1,
+      page_size: 10,
       ...conditions,
       bucket_name: config.easynft.maxtrix_storage.bucketName,
       search_name: 'metadata',

@@ -42,16 +42,16 @@ class MatrixStorageAPI extends API {
 
     const resp = res.data;
     let resp_data;
-    try{
+    try {
       ctx.helper.throwMatrixStorageAPIError(resp);
       resp_data = resp.data;
-    }catch(e){
+    } catch (e) {
       if (e.biz_code !== 15062) {
         throw e;
       }
     }
-    
-    return resp_data?resp_data.objs: [];
+
+    return resp_data ? resp_data.objs : [];
   }
 
   async ask_for_upload_credential(params) {
@@ -68,7 +68,7 @@ class MatrixStorageAPI extends API {
 
     const resp = res.data;
     ctx.helper.throwMatrixStorageAPIError(resp);
-    console.log(resp);
+
     return resp.data;
 
   }
@@ -84,7 +84,7 @@ class MatrixStorageAPI extends API {
       IsPrivate: params.is_private,
       FileName: params.file_name,
       FileSize: params.file_size,
-      Credential:params.credential
+      Credential: params.credential,
     });
     const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.basePath}/v1/upload_file`, {
       method: 'POST',

@@ -16,10 +16,10 @@ easynft api document
 
 #### REQUEST QUERY ####
 
-| Name | Required | Type   | Description             |
-|------|----------|--------|-------------------------|
-| page | no       | string | the page number of list |
-| size | no       | string | the size of list        |
+| Name       | Required | Type   | Description             |
+|------------|----------|--------|-------------------------|
+| page_index | no       | string | the page number of list |
+| page_size  | no       | string | the size of list        |
 
 #### RESPONSE ####
 

@@ -12,7 +12,7 @@ module.exports = () => {
 
   const config = exports = {};
 
-  config.easynft = { maxtrix_storage: { headers: {} },ipfs:{} };
+  config.easynft = { maxtrix_storage: { headers: {} }, ipfs: {} };
 
   if (process.env.EASYNFT_BASE_PATH) {
     config.easynft.basePath = process.env.EASYNFT_BASE_PATH;
@@ -31,7 +31,7 @@ module.exports = () => {
   }
 
   if (process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS) {
-    config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',').map(_=>_.toLowerCase());
+    config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',').map(_ => _.toLowerCase());
   }
 
   if (process.env.EASYNFT_IPFS_URL) {
@@ -41,7 +41,7 @@ module.exports = () => {
   if (process.env.EASYNFT_IPFS_CHUNKER) {
     config.easynft.ipfs.chunker = process.env.EASYNFT_IPFS_CHUNKER;
   }
-  
+
   return {
     ...config,
   };

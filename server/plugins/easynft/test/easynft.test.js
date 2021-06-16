@@ -38,7 +38,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const appVersion = faker.datatype.string(8);
       const signature = faker.datatype.string(64);
       const from = 'openapi';
-      const file_name = 'metadata.json';
+      const file_name = 'metadata';
 
       const page = faker.datatype.number();
       const size = faker.datatype.number();
@@ -88,7 +88,7 @@ describe('egg-plugin:easynft.test.js', () => {
               cid: image.cid,
               page_index: 1,
               page_size: 1,
-            }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
+            }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
 
         }
 
@@ -105,9 +105,9 @@ describe('egg-plugin:easynft.test.js', () => {
         .post(`${config.maxtrix_storage.basePath}/v1/bucket_files_list`, {
           bucket_name: config.maxtrix_storage.bucketName,
           search_name: file_name,
-          page,
-          size,
-        }).reply(200, { code: 0, msg: 'ok', data: { items } });
+          page_index:page,
+          page_size:size,
+        }).reply(200, { code: 0, msg: 'ok', data: { objs:items } });
 
       app.mockHeaders({
         AppId: appId,
@@ -117,7 +117,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
       await app.httpRequest()
         .get(config.basePath)
-        .query({ page, size })
+        .query({ page_index:page, page_size:size })
         .expect(200, res);
 
     });
@@ -133,7 +133,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const appVersion = faker.datatype.string(8);
       const signature = faker.datatype.string(64);
       const from = 'openapi';
-      const file_name = 'metadata.json';
+      const file_name = 'metadata';
       const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
       const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
       const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
@@ -153,7 +153,7 @@ describe('egg-plugin:easynft.test.js', () => {
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: [ file ] });
+        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
 
 
       nock(file.store_host, {
@@ -181,7 +181,7 @@ describe('egg-plugin:easynft.test.js', () => {
           cid: image.cid,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
+        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
 
       app.mockHeaders({
         AppId: appId,
@@ -201,7 +201,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const appVersion = faker.datatype.string(8);
       const signature = faker.datatype.string(64);
       const from = 'openapi';
-      const file_name = 'metadata.json';
+      const file_name = 'metadata';
       const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
       const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
       const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)] };
@@ -221,7 +221,7 @@ describe('egg-plugin:easynft.test.js', () => {
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: [ file ] });
+        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
 
 
       nock(file.store_host, {
@@ -249,7 +249,7 @@ describe('egg-plugin:easynft.test.js', () => {
           cid: image.cid,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: [ imageFile ] });
+        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
 
       app.mockHeaders({
         AppId: appId,
@@ -269,7 +269,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const appVersion = faker.datatype.string(8);
       const signature = faker.datatype.string(64);
       const from = 'openapi';
-      const file_name = 'metadata.json';
+      const file_name = 'metadata';
       const file = { cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)], decimals: faker.datatype.number(10000000000000000000) };
 
       nock(config.maxtrix_storage.host, {
@@ -285,7 +285,7 @@ describe('egg-plugin:easynft.test.js', () => {
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: [ file ] });
+        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
 
       app.mockHeaders({
         AppId: appId,
@@ -317,7 +317,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const appVersion = faker.datatype.string(8);
       const signature = faker.datatype.string(64);
       const from = 'openapi';
-      const file_name = 'metadata.json';
+      const file_name = 'metadata';
 
       const metadata_credential = { store_host: faker.internet.url(), credential: faker.datatype.hexaDecimal(12), event_id: faker.datatype.hexaDecimal(14) };
       const image_credential = { store_host: faker.internet.url(), credential: faker.datatype.hexaDecimal(12), event_id: faker.datatype.hexaDecimal(14) };
@@ -336,7 +336,7 @@ describe('egg-plugin:easynft.test.js', () => {
           page_index: 1,
           page_size: 1,
         }).once()
-        .reply(200, { code: 0, msg: 'ok', data: [ ] });
+        .reply(200, { code: 0, msg: 'ok', data: {objs:[ ]} });
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',
@@ -351,7 +351,7 @@ describe('egg-plugin:easynft.test.js', () => {
           page_index: 1,
           page_size: 1,
         }).once()
-        .reply(200, { code: 0, msg: 'ok', data: [] });
+        .reply(200, { code: 0, msg: 'ok', data: {objs:[]} });
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',

@@ -9,19 +9,19 @@
 const createError = require('http-errors');
 // const multihashes = require('multihashes');
 // const CID = require('cids');
-const {create:createClient} = require('ipfs-http-client');
+const { create: createClient } = require('ipfs-http-client');
 
 // const crypto = require('crypto');
 // const { Readable } = require('stream');
 
 async function generateCID(data) {
 
-  const {url,...opts} = this.config.easynft.ipfs;
+  const { url, ...opts } = this.config.easynft.ipfs;
   const client = createClient(url);
-  const res = await client.add(data,opts);
+  const res = await client.add(data, opts);
   return res.path;
-  
-  /// TODO: generate cid in local
+
+  // / TODO: generate cid in local
   // const opts = this.config.easynft.multihashes;
   // const hash = crypto.createHash(opts.algorithm);
   // if (Buffer.isBuffer(data)) {

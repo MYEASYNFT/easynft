@@ -45,6 +45,22 @@ exports.easynft = {
 ```js
 // {app_root}/config/config.default.js
 exports.easynft = {
+    basePath: '/easynft',
+    maxtrix_storage: {
+        host: 'http://teststc-api.atpool.com',
+        basePath: '/store/openapi',
+        bucketName: '$nft',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            From: 'openapi',
+        },
+        proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_ => _.toLowerCase()),
+    },
+    ipfs: {
+        url: 'http://st-ipfsmanager.bingheyc.com',
+        pin: true,
+        chunker: 'size-1048576',
+    }
 };
 ```
 

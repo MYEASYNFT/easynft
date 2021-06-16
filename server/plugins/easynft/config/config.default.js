@@ -15,20 +15,20 @@ exports.easynft = {
       'Content-Type': 'application/x-www-form-urlencoded',
       From: 'openapi',
     },
-    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_=>_.toLowerCase()),
+    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_ => _.toLowerCase()),
   },
   multihashes: {
     algorithm: 'sha256',
     hashName: 'sha2-256',
     version: 0,
     codec: 'dag-pb',
-    multibaseName: 'base58btc'
+    multibaseName: 'base58btc',
   },
-  ipfs:{
-    url:'http://st-ipfsmanager.bingheyc.com',
+  ipfs: {
+    url: 'http://st-ipfsmanager.bingheyc.com',
     pin: true,
-    chunker: 'size-1048576'
-  }
+    chunker: 'size-1048576',
+  },
 };
 
 exports.customLoader = {
