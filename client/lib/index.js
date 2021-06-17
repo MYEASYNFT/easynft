@@ -35,7 +35,7 @@ async function getAll() {
     try {
         console.debug(`start getAll() param:${JSON.stringify({params, options})}`);
         const data = await client.get(path, params, options);
-        console.debug(`end getAll() param:${JSON.stringify({params, options})} result:${JSON.stringify(data)}`);
+        console.debug(`end getAll() param:${JSON.stringify({params, options})}`);
         return data;
     } catch (error) {
         console.error('error getAll() error:', JSON.stringify({

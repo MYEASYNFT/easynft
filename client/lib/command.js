@@ -6,7 +6,7 @@ const api = require('./index');
 
 //--------------------------------------------------------------------------------
 // add command
-// node command.js add D:\\a.png -n a.png -d 8888 -dn this is description
+// node command.js add D:\\a.png -n a.png -d 8888 -dn this is description -p '{"aa":"bb","cc":"dd"}'
 //--------------------------------------------------------------------------------
 program
     .command('add')
@@ -21,19 +21,25 @@ program
         //     file_path,
         //     options,
         // })}`);
-
+        const { name, description, decimals, properties } = options;
+        let propertiesObj = null;
+        try {
+            propertiesObj = JSON.parse(properties || {});
+        } catch (error) {
+            console.log('error: properties format error. example: \'{"aa":"bb","cc":"dd"}\'')
+            return;
+        }
         if (!fs.existsSync(file_path)) {
             console.log('error: file_path is not exists')
             return;
         }
 
-        const { name, description, decimals, properties } = options;
         const result = await api.add({
             file: fs.createReadStream(file_path),
             name: name,
             description: description,
             decimals: Number(decimals),
-            properties: properties
+            properties: propertiesObj
         });
         console.log(JSON.stringify(result, null, 4));
     });
@@ -54,7 +60,7 @@ program
 
 //--------------------------------------------------------------------------------
 // getOne command
-// node command.js getOne
+// node command.js getOne QmUzA3j2VBbmajMVJwCL5JYim86WaJuAj5B4HVWpFyQZLV
 //--------------------------------------------------------------------------------
 program
     .command('getOne')
@@ -65,4 +71,9 @@ program
         console.log(JSON.stringify(result, null, 4));
     });
 
+
+if (!process.argv[2]) {
+    program.help();
+    console.log();
+}
 program.parse(process.argv);

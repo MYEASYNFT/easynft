@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "easynft": "./lib/command.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
