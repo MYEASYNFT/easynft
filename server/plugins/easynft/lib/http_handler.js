@@ -28,10 +28,11 @@ async function get(ctx) {
 }
 
 async function post(ctx) {
-
   let res,
     error;
   try {
+    if(ctx.request.files.length<=0)
+      ctx.helper.throwHttpError({status:400,data:'required file'});
     res = await ctx.service.nftMetadata.create(ctx.request.files, ctx.request.body);
   } catch (e) {
     error = e;

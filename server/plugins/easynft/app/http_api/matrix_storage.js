@@ -91,6 +91,7 @@ class MatrixStorageAPI extends API {
       headers,
       dataType: 'json',
       files: [ content ],
+      timeout: 60000,
     });
     ctx.helper.throwHttpError(res);
 

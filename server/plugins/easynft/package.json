@@ -19,11 +19,13 @@
     "http-errors": "^1.8.0",
     "json-bigint": "^1.0.0",
     "multihashes": "^4.0.2",
-    "sdk-base": "^3.6.0"
+    "sdk-base": "^3.6.0",
+    "urlencode": "^1.1.0"
   },
   "devDependencies": {
     "@types/faker": "^5.5.6",
     "@types/node": "^15.12.2",
+    "@types/urlencode": "^1.1.2",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
     "egg": "^2.16.0",

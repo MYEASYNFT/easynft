@@ -9,6 +9,7 @@
 const fs = require('fs');
 const BigNumber = require('bignumber.js');
 const JSONbig = require('json-bigint');
+const urlencode = require('urlencode');
 
 const { Service } = require('egg');
 
@@ -33,7 +34,7 @@ class NFTMetadataService extends Service {
       images.push(`ipfs://${fileCID}`);
     }
 
-    const properties = opts.properties ? { ...opts.properties, files: fileInfos } : { files: fileInfos };
+    const properties = opts.properties ? { ...JSON.parse(opts.properties), files: fileInfos } : { files: fileInfos };
     const metadata = {
       ...opts, image: images.join(','), properties,
     };
@@ -55,9 +56,8 @@ class NFTMetadataService extends Service {
     }
 
     const promises = _files.map(_ => this.upload(_.cid, _.file));
-    promises.push(this.upload(cid, metadata_buffer));
     await Promise.all(promises);
-
+    await this.upload(cid, metadata_buffer);
     return { cid, metadata, status: 'pending' };
   }
 
@@ -84,7 +84,7 @@ class NFTMetadataService extends Service {
       });
       info = info_list[0];
       const stat = await fs.promises.stat(data.filepath);
-      file_name = data.filename;
+      file_name = urlencode(data.filename,'utf8');
       file_size = stat.size;
       file_content = fs.createReadStream(data.filepath);
       file_type = data.mime;
