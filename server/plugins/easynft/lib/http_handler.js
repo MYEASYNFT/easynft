@@ -13,7 +13,7 @@ async function index(ctx) {
   const res = await ctx.service.nftMetadata.find(ctx.query);
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
 
 }
 
@@ -23,7 +23,7 @@ async function get(ctx) {
   if (!res) { return; }
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
 
 }
 
@@ -45,7 +45,7 @@ async function post(ctx) {
   if (!res) { return; }
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
   ctx.status = 201;
 
 }
