@@ -117,7 +117,7 @@ module.exports = class {
             console.warn(error);
             throw error;
         }
-        if (response.statusCode != 200) {
+        if (response.statusCode < 200 || response.statusCode >= 300) {
             throw new Exception(response.statusCode, response.body);
         }
     }

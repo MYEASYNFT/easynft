@@ -35,6 +35,7 @@ class Test {
 }
 
 async function exec() {
-    await Test.addTest();
+    //await Test.addTest();
+    await Test.getAllTest();
 }
 exec();
