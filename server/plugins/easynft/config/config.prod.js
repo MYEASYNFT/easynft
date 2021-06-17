@@ -26,6 +26,10 @@ module.exports = () => {
     config.easynft.maxtrix_storage.basePath = process.env.EASYNFT_MAXTRIX_STORAGE_BASE_PATH;
   }
 
+  if (process.env.EASYNFT_MAXTRIX_STORAGE_STORE_BASE_PATH) {
+    config.easynft.maxtrix_storage.storeBasePath = process.env.EASYNFT_MAXTRIX_STORAGE_STORE_BASE_PATH;
+  }
+
   if (process.env.EASYNFT_MAXTRIX_STORAGE_FROM) {
     config.easynft.maxtrix_storage.headers.from = process.env.EASYNFT_MAXTRIX_STORAGE_FROM;
   }
