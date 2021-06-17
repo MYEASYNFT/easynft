@@ -5,6 +5,7 @@ nft client
 ## QuickStart
 ```bash
 command help
+$ cd lib
 $ node command -h
 ````
 
