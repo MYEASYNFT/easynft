@@ -25,7 +25,8 @@ class MatrixStorageAPI extends API {
 
     const resp = res.data;
     ctx.helper.throwMatrixStorageAPIError(resp);
-    return resp.data.objs;
+    const {objs:items,...others} = resp.data;
+    return {items,...others};
   }
 
   async file_detail(condition) {
@@ -117,6 +118,7 @@ class MatrixStorageAPI extends API {
     const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.storeBasePath}/download_file?${searchParams.toString()}`, {
       method: 'GET',
       headers,
+      timeout: 60000,
     });
     ctx.helper.throwHttpError(res);
 

@@ -31,24 +31,28 @@ Date: Wed, 22 Feb 2012 08:32:21 GMT
 {
     "code":0,
     "msg":"ok",
-    "data":[{
-        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
-        "metadata":{
-            "name":"the nft name",
-            "description":"the nft description",
-            "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-            "decimals":123123,
-            "properties":{
-                "files":[
-                    {
-                        "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-                        "filename":"image file name"
-                    }
-                ]
-            }
-        },
-        "status":"pending"
-    }]
+    "data":{
+        "items":[{
+            "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+            "metadata":{
+                "name":"the nft name",
+                "description":"the nft description",
+                "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+                "decimals":123123,
+                "properties":{
+                    "files":[
+                        {
+                            "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+                            "filename":"image file name"
+                        }
+                    ]
+                }
+            },
+            "status":"pending"
+        }],
+        "total_page": 1,
+        "total_count": 3
+    }
 }
 ```
 

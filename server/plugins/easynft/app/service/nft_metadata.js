@@ -179,12 +179,13 @@ class NFTMetadataService extends Service {
       search_name: 'metadata',
     });
 
-    if (stats.length <= 0) {
+    if (stats.items.length <= 0) {
       return stats;
     }
 
-    const res = await Promise.all(stats.map(_ => this.getOne(_)));
-    return res;
+    const {items,...others} = stats;
+    const res = await Promise.all(items.map(_ => this.getOne(_)));
+    return {items:res,...others};
   }
 }
 
