@@ -9,6 +9,7 @@
   "dependencies": {
     "egg": "^2.15.1",
     "egg-easynft": "file:./plugins/easynft",
+    "egg-http-logger": "git+https://github.com/kiba-zhao/egg-http-logger.git",
     "egg-scripts": "^2.11.0",
     "ipfs-http-client": "^50.1.1"
   },

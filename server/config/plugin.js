@@ -10,5 +10,10 @@ module.exports = {
   easynft:{
     package: 'egg-easynft',
     enable:true
+  },
+
+  httpLogger:{
+    enable: true,
+    package: 'egg-http-logger'
   }
 };
