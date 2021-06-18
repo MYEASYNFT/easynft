@@ -60,7 +60,7 @@ program
 
 //--------------------------------------------------------------------------------
 // getOne command
-// node command.js getOne QmUzA3j2VBbmajMVJwCL5JYim86WaJuAj5B4HVWpFyQZLV
+// node command.js getOne Qmdn5Ggbr4VFV9gwTF4nh4cyipdZQJUAecrcJEQeM17b3e
 //--------------------------------------------------------------------------------
 program
     .command('getOne')
