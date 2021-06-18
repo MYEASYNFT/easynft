@@ -14,7 +14,8 @@ class MatrixStorageAPI extends API {
 
     const { ctx, app, config } = this;
     const headers = ctx.helper.generateMatrixStorageAPIHeaders();
-    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/v1/bucket_files_list`, {
+
+    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/bucket_files_list`, {
       dataType: 'json',
       method: 'POST',
       headers,
@@ -32,7 +33,8 @@ class MatrixStorageAPI extends API {
     const { ctx, app, config } = this;
 
     const headers = ctx.helper.generateMatrixStorageAPIHeaders();
-    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/v1/file_detail`, {
+
+    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/file_detail`, {
       dataType: 'json',
       method: 'POST',
       headers,
@@ -51,14 +53,15 @@ class MatrixStorageAPI extends API {
       }
     }
 
-    return resp_data ? resp_data.objs : [];
+    return resp_data ? resp_data.objs || [resp_data] : [];
   }
 
   async ask_for_upload_credential(params) {
 
     const { ctx, app, config } = this;
     const headers = ctx.helper.generateMatrixStorageAPIHeaders();
-    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/v1/ask_for_upload_credential`, {
+
+    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/ask_for_upload_credential`, {
       dataType: 'json',
       method: 'POST',
       headers,
@@ -86,7 +89,8 @@ class MatrixStorageAPI extends API {
       FileSize: params.file_size,
       Credential: params.credential,
     });
-    const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.basePath}/v1/upload_file`, {
+
+    const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.storeBasePath}/upload_file`, {
       method: 'POST',
       headers,
       dataType: 'json',
@@ -109,7 +113,8 @@ class MatrixStorageAPI extends API {
       bucket_name: params.bucket_name,
       cid: params.cid,
     });
-    const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.basePath}/v1/download_file?${searchParams.toString()}`, {
+
+    const res = await app.curl(`${params.store_host}${config.easynft.maxtrix_storage.storeBasePath}/download_file?${searchParams.toString()}`, {
       method: 'GET',
       headers,
     });

@@ -69,7 +69,7 @@ describe('egg-plugin:easynft.test.js', () => {
             appversion: appVersion,
             signature,
           })
-            .get(`${config.maxtrix_storage.basePath}/v1/download_file`)
+            .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
             .query({
               bucket_name: config.maxtrix_storage.bucketName,
               cid,
@@ -83,12 +83,12 @@ describe('egg-plugin:easynft.test.js', () => {
             appversion: appVersion,
             signature,
           })
-            .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+            .post(`${config.maxtrix_storage.basePath}/file_detail`, {
               bucket_name: config.maxtrix_storage.bucketName,
               cid: image.cid,
               page_index: 1,
               page_size: 1,
-            }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
+            }).reply(200, { code: 0, msg: 'ok', data: { objs: [ imageFile ] } });
 
         }
 
@@ -102,12 +102,12 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/bucket_files_list`, {
+        .post(`${config.maxtrix_storage.basePath}/bucket_files_list`, {
           bucket_name: config.maxtrix_storage.bucketName,
           search_name: file_name,
-          page_index:page,
-          page_size:size,
-        }).reply(200, { code: 0, msg: 'ok', data: { objs:items } });
+          page_index: page,
+          page_size: size,
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: items } });
 
       app.mockHeaders({
         AppId: appId,
@@ -117,7 +117,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
       await app.httpRequest()
         .get(config.basePath)
-        .query({ page_index:page, page_size:size })
+        .query({ page_index: page, page_size: size })
         .expect(200, res);
 
     });
@@ -147,13 +147,13 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: [ file ] } });
 
 
       nock(file.store_host, {
@@ -162,7 +162,7 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .get(`${config.maxtrix_storage.basePath}/v1/download_file`)
+        .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
         .query({
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
@@ -176,12 +176,12 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid: image.cid,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: [ imageFile ] } });
 
       app.mockHeaders({
         AppId: appId,
@@ -215,13 +215,13 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: [ file ] } });
 
 
       nock(file.store_host, {
@@ -230,7 +230,7 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .get(`${config.maxtrix_storage.basePath}/v1/download_file`)
+        .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
         .query({
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
@@ -244,12 +244,12 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid: image.cid,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ imageFile ]} });
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: [ imageFile ] } });
 
       app.mockHeaders({
         AppId: appId,
@@ -279,13 +279,13 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
           file_name,
           page_index: 1,
           page_size: 1,
-        }).reply(200, { code: 0, msg: 'ok', data: {objs:[ file ]} });
+        }).reply(200, { code: 0, msg: 'ok', data: { objs: [ file ] } });
 
       app.mockHeaders({
         AppId: appId,
@@ -329,14 +329,14 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid,
           file_name,
           page_index: 1,
           page_size: 1,
         }).once()
-        .reply(200, { code: 0, msg: 'ok', data: {objs:[ ]} });
+        .reply(200, { code: 0, msg: 'ok', data: { objs: [ ] } });
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',
@@ -345,13 +345,13 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/file_detail`, {
+        .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
           cid: file_cid,
           page_index: 1,
           page_size: 1,
         }).once()
-        .reply(200, { code: 0, msg: 'ok', data: {objs:[]} });
+        .reply(200, { code: 0, msg: 'ok', data: { objs: [] } });
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',
@@ -360,7 +360,7 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/ask_for_upload_credential`, {
+        .post(`${config.maxtrix_storage.basePath}/ask_for_upload_credential`, {
           bucket_name: config.maxtrix_storage.bucketName,
           file_name,
           is_verified: 0,
@@ -375,7 +375,7 @@ describe('egg-plugin:easynft.test.js', () => {
         appversion: appVersion,
         signature,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/ask_for_upload_credential`, {
+        .post(`${config.maxtrix_storage.basePath}/ask_for_upload_credential`, {
           bucket_name: config.maxtrix_storage.bucketName,
           file_name: filename,
           is_verified: 0,
@@ -392,7 +392,7 @@ describe('egg-plugin:easynft.test.js', () => {
         bucketname: config.maxtrix_storage.bucketName,
         credential: metadata_credential.credential,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/upload_file`).once()
+        .post(`${config.maxtrix_storage.storeBasePath}/upload_file`).once()
         .reply(201, { code: 0, msg: 'ok', data: {} });
 
       nock(image_credential.store_host, {
@@ -404,7 +404,7 @@ describe('egg-plugin:easynft.test.js', () => {
         bucketname: config.maxtrix_storage.bucketName,
         credential: image_credential.credential,
       })
-        .post(`${config.maxtrix_storage.basePath}/v1/upload_file`).once()
+        .post(`${config.maxtrix_storage.storeBasePath}/upload_file`).once()
         .reply(201, { code: 0, msg: 'ok', data: {} });
 
 

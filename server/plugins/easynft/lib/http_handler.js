@@ -13,7 +13,7 @@ async function index(ctx) {
   const res = await ctx.service.nftMetadata.find(ctx.query);
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
 
 }
 
@@ -23,7 +23,7 @@ async function get(ctx) {
   if (!res) { return; }
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
 
 }
 
@@ -31,8 +31,7 @@ async function post(ctx) {
   let res,
     error;
   try {
-    if(ctx.request.files.length<=0)
-      ctx.helper.throwHttpError({status:400,data:'required file'});
+    if (ctx.request.files.length <= 0) { ctx.helper.throwHttpError({ status: 400, data: 'required file' }); }
     res = await ctx.service.nftMetadata.create(ctx.request.files, ctx.request.body);
   } catch (e) {
     error = e;
@@ -46,7 +45,7 @@ async function post(ctx) {
   if (!res) { return; }
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSONbig.stringify(res);
+  ctx.body = JSONbig.stringify({code:0,msg:'ok',data:res});
   ctx.status = 201;
 
 }

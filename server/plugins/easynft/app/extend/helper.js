@@ -70,7 +70,7 @@ function throwMatrixStorageAPIError(resp) {
   if (resp.code >= 400 && resp.code < 600) {
     error = createError(resp.code, resp.msg);
   } else {
-    error = createError(409,  resp.msg);
+    error = createError(409, resp.msg);
   }
   error.type = error.biz_code = resp.code;
   throw error;
@@ -78,7 +78,7 @@ function throwMatrixStorageAPIError(resp) {
 
 function throwHttpError(res) {
   if (res.status >= 400 && res.status < 600) {
-    let error = createError(res.status, res.data);
+    const error = createError(res.status, res.data);
     error.type = res.status;
     throw error;
   }

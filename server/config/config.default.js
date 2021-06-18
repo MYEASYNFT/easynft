@@ -28,7 +28,13 @@ module.exports = appInfo => {
       enable: false,
     },
   };
-  
+
+  exports.cluster = {
+    listen: {
+      hostname: '0.0.0.0',
+    },
+  };
+
   return {
     ...config,
     ...userConfig,

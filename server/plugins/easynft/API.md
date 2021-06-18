@@ -28,9 +28,10 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 Connection: keep-alive
 Date: Wed, 22 Feb 2012 08:32:21 GMT
-
-[
-    {
+{
+    "code":0,
+    "msg":"ok",
+    "data":[{
         "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
         "metadata":{
             "name":"the nft name",
@@ -47,8 +48,8 @@ Date: Wed, 22 Feb 2012 08:32:21 GMT
             }
         },
         "status":"pending"
-    }
-]
+    }]
+}
 ```
 
 ### GET METADATA ###
@@ -94,24 +95,27 @@ Content-Type: application/json
 Connection: keep-alive
 Date: Wed, 22 Feb 2012 08:32:21 GMT
 
-
 {
-    "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
-    "metadata":{
-        "name":"the nft name",
-        "description":"the nft description",
-        "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-        "decimals":123123,
-        "properties":{
-            "files":[
-                {
-                    "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-                    "filename":"image file name"
-                }
-            ]
-        }
-    },
-    "status":"complete"
+    "code":0,
+    "msg":"ok",
+    "data":{
+        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+        "metadata":{
+            "name":"the nft name",
+            "description":"the nft description",
+            "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+            "decimals":123123,
+            "properties":{
+                "files":[
+                    {
+                        "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+                        "filename":"image file name"
+                    }
+                ]
+            }
+        },
+        "status":"complete"
+    }
 }
 
 ```
@@ -126,12 +130,14 @@ Content-Type: application/json
 Connection: keep-alive
 Date: Wed, 22 Feb 2012 08:32:21 GMT
 
-
 {
-    "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
-    "status":"pending"
+    "code":0,
+    "msg":"ok",
+    "data":{
+        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+        "status":"pending"
+    }
 }
-
 ```
 
 ** PENDING IMAGE UPLOAD STATUS **
@@ -144,24 +150,27 @@ Content-Type: application/json
 Connection: keep-alive
 Date: Wed, 22 Feb 2012 08:32:21 GMT
 
-
 {
-    "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
-    "metadata":{
-        "name":"the nft name",
-        "description":"the nft description",
-        "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-        "decimals":123123,
-        "properties":{
-            "files":[
-                {
-                    "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-                    "filename":"image file name"
-                }
-            ]
-        }
-    },
-    "status":"pending"
+    "code":0,
+    "msg":"ok",
+    "data":{
+        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+        "metadata":{
+            "name":"the nft name",
+            "description":"the nft description",
+            "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+            "decimals":123123,
+            "properties":{
+                "files":[
+                    {
+                        "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+                        "filename":"image file name"
+                    }
+                ]
+            }
+        },
+        "status":"pending"
+    }
 }
 
 ```
@@ -200,21 +209,24 @@ Content-Type: application/json
 Connection: keep-alive
 Date: Wed, 22 Feb 2012 08:32:21 GMT
 
-
 {
-    "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
-    "metadata":{
-        "name":"the nft name",
-        "description":"the nft description",
-        "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-        "decimals":123123,
-        "properties":{
-            "files":[
-                {
-                    "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
-                    "filename":"image file name"
-                }
-            ]
+    "code":0,
+    "msg":"ok",
+    "data":{
+        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+        "metadata":{
+            "name":"the nft name",
+            "description":"the nft description",
+            "image":"ipfs://maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+            "decimals":123123,
+            "properties":{
+                "files":[
+                    {
+                        "cid":"maxasipb+86x486bxmmnj3vkj9sdtqkpcqmxwhuncm2h1jx8j",
+                        "filename":"image file name"
+                    }
+                ]
+            }
         }
     }
 }

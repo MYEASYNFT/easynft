@@ -84,7 +84,7 @@ class NFTMetadataService extends Service {
       });
       info = info_list[0];
       const stat = await fs.promises.stat(data.filepath);
-      file_name = urlencode(data.filename,'utf8');
+      file_name = urlencode(data.filename, 'utf8');
       file_size = stat.size;
       file_content = fs.createReadStream(data.filepath);
       file_type = data.mime;
