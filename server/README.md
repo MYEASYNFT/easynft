@@ -10,7 +10,7 @@ see [egg docs][egg] for more detail.
 
 ### EasyNFT Plugin ###
 
-see [plugins/easynft/README.md][egg-easynft] for more detail.
+see [egg-easynft](plugins/easynft/README.md)  for more detail.
 
 ### Development
 

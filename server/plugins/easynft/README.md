@@ -69,7 +69,7 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ### API Docs ###
 
-see [API.md][EasyNFT API] for more detail.
+see [EasyNFT](API.md) for more detail.
 
 ## Example
 
