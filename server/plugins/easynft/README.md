@@ -48,7 +48,8 @@ exports.easynft = {
     basePath: '/easynft',
     maxtrix_storage: {
         host: 'http://teststc-api.atpool.com',
-        basePath: '/store/openapi',
+        basePath: '/store/openapi/v1',
+        storeBasePath: '/store/openapi/v1',
         bucketName: '$nft',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,6 +66,10 @@ exports.easynft = {
 ```
 
 see [config/config.default.js](config/config.default.js) for more detail.
+
+### API Docs ###
+
+see [API.md][EasyNFT API] for more detail.
 
 ## Example
 

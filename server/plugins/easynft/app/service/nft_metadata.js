@@ -121,7 +121,7 @@ class NFTMetadataService extends Service {
   async getOne({ cid, store_host, ...opts }) {
 
     if (PENDING_STATUS.includes(opts.status)) {
-      return { cid, status: 'pending' };
+        return { cid, create_at:opts.create_at,status: 'pending' };
     }
 
     const { ctx, config } = this;
@@ -134,20 +134,29 @@ class NFTMetadataService extends Service {
     const metadata = JSONbig.parse(metadata_buffer.toString('utf8'));
 
     let status = 'complete';
+    let totalSize = 0;
     for (const file of metadata.properties.files) {
+      
       const [ stat ] = await ctx.httpAPI.MatrixStorage.file_detail({
         bucket_name: config.easynft.maxtrix_storage.bucketName,
         cid: file.cid,
         page_index: 1,
         page_size: 1,
       });
-      if (!stat || PENDING_STATUS.includes(stat.status)) {
+
+      if (!stat) {
         status = 'pending';
         break;
       }
+      if (PENDING_STATUS.includes(stat.status)) {
+        status = 'pending';
+      }
+      const fileSize = parseInt(stat.file_size);
+      totalSize += fileSize;
+      
     }
 
-    return { cid, metadata, status };
+    return { cid, metadata,size:totalSize,create_at:opts.create_at, status };
   }
 
   async findOne(cid) {
