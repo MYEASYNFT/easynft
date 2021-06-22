@@ -146,13 +146,14 @@ class NFTMetadataService extends Service {
 
       if (!stat) {
         status = 'pending';
+        totalSize = null;
         break;
       }
       if (PENDING_STATUS.includes(stat.status)) {
         status = 'pending';
       }
-      const fileSize = parseInt(stat.file_size);
-      totalSize += fileSize;
+      const fileSize = parseInt(stat.file_size || stat.size);
+      totalSize += isNaN(fileSize)?0:fileSize;
       
     }
 
