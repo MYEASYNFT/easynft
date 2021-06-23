@@ -26,7 +26,7 @@ exports.easynft = {
     multibaseName: 'base58btc',
   },
   ipfs: {
-    url: 'http://st-ipfsmanager.bingheyc.com',
+    url: 'http://st-ipmanager.bingheyc.com',
     pin: true,
     chunker: 'size-1048576',
   },
