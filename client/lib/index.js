@@ -1,3 +1,4 @@
+const debug = require('debug')('easynft-sdk');
 const HttpClient = require('./httpClient');
 const Exception = require('./exception');
 
@@ -48,14 +49,14 @@ module.exports = class {
      *    }
      *]>}
      */
-    async getAll() {
+    async getAll(opts) {
         const params = {};
         const path = '/easynft';
-        const options = {};
+      const options = {query:{page_index:opts.page,page_size:opts.size}};
         try {
-            console.debug(`start getAll() param:${JSON.stringify({params, options})}`);
+            debug(`start getAll() param:${JSON.stringify({params, options})}`);
             const data = await this.client.get(path, params, options);
-            console.debug(`end getAll() param:${JSON.stringify({params, options})}`);
+            debug(`end getAll() param:${JSON.stringify({params, options})}`);
             return data;
         } catch (error) {
             console.error('error getAll() error:', JSON.stringify({
@@ -106,9 +107,9 @@ module.exports = class {
         const path = `/easynft/${cid}`;
         const options = {};
         try {
-            console.debug(`start getOne() param:${JSON.stringify({params, options})}`);
+            debug(`start getOne() param:${JSON.stringify({params, options})}`);
             const data = await this.client.get(path, params, options);
-            console.debug(`end getOne() param:${JSON.stringify({params, options})} result:${JSON.stringify(data)}`);
+            debug(`end getOne() param:${JSON.stringify({params, options})} result:${JSON.stringify(data)}`);
             return data;
         } catch (error) {
             console.error('error getOne() error:', JSON.stringify({
@@ -158,9 +159,9 @@ module.exports = class {
             throw new Exception(4001, 'params file is requred');
         }
         try {
-            console.debug(`start add() param:${JSON.stringify({ params: otherParams, options })}`);
+            debug(`start add() param:${JSON.stringify({ params: otherParams, options })}`);
             const data = await this.client.upload(path, file, otherParams, options);
-            console.debug(`end add() param:${JSON.stringify({ otherParams, options })} result:${JSON.stringify(data)}`);
+            debug(`end add() param:${JSON.stringify({ otherParams, options })} result:${JSON.stringify(data)}`);
             return data;
         } catch (error) {
             console.error('error add() error:', JSON.stringify({

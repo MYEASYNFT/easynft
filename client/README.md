@@ -1,11 +1,21 @@
 # easynft-client
 
-nft client
+nft client for nodejs
 
+### QuickStart   ###
 
-### Command Example
+#### Command Line Install ####
+
 ```bash
-create D:\\config.env file
+# Install
+git clone https://github.com/MatrixStorageTech2021/easynft.git
+npm install -g easynfy/client
+```
+
+#### Configuration ####
+
+```
+// {pwd}/config.env
 
 APP_ID=LogG1623754383
 APP_SECRET=xxx
@@ -13,18 +23,22 @@ APP_VERSION=1.0.0
 HOST=http://localhost:7001
 HTTP_TIME_OUT=30000
 
-command help
-$ cd lib
-$ node command -h
+```
 
-add test demo (the D:\\a.png needs to be created by you)
-$ node command add D:\\config.env D:\\a.png -n a.png -d 8888 -dn this is description -p '{"aa":"bb","cc":"dd"}'
+#### Usage ####
 
-getAll test demo
-$ node command getAll D:\\config.env
+```bash
+# show help detail
+easynft -h
 
-getOne test demo
-$ node command getOne D:\\config.env Qmdn5Ggbr4VFV9gwTF4nh4cyipdZQJUAecrcJEQeM17b3e
+#create nft metadata
+$ easynft add xxx.png -n name_of_metadata -d 8888 -dn description_of_metadata -p '{"aa":"bb","cc":"dd"}'
+
+# list nft metadata with pagigng
+$ easynft list -p 1 -s 5
+
+# get nft metadata with cid
+$ easynft get Qmdn5Ggbr4VFV9gwTF4nh4cyipdZQJUAecrcJEQeM17b3e
 
 ```
 

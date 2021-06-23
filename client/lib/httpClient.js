@@ -42,7 +42,8 @@ module.exports = class {
                 url: url,
                 method: "GET",
                 timeout: this.timeout,
-                headers: headers,
+              headers: headers,
+              qs:opts.query,
                 form: params || {},
             }, (error, response, body) => {
                 try {
@@ -65,7 +66,7 @@ module.exports = class {
                 url: url,
                 method: "POST",
                 timeout: this.timeout,
-                headers: headers,
+              headers: headers,
                 body: params || {},
             }, (error, response, body) => {
                 try {
