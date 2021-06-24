@@ -45,7 +45,7 @@ $ easynft get Qmdn5Ggbr4VFV9gwTF4nh4cyipdZQJUAecrcJEQeM17b3e
 ### Code Example
 
 ```javascript
-const ApiClient = require('./index');
+const ApiClient = require('easynft-sdk');
 const fs = require('fs');
 const config = {
     APP_ID: 'LogG1623754383',
