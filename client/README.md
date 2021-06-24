@@ -1,10 +1,10 @@
 # easynft-client
 
-nft client for nodejs
+Command-Line Tools and SDK base on [NodeJS](https://nodejs.org/en/) for [EasyNFT Server](../server/README.md).
 
 ### QuickStart   ###
 
-#### Command Line Install ####
+#### Install ####
 
 ```bash
 # Install
@@ -24,6 +24,22 @@ HOST=http://localhost:7001
 HTTP_TIME_OUT=30000
 
 ```
+
+##### Get your APP_ID and  APP_SECRET#####
+
+**Setp.1: Get Account for free** 
+
+![Get for Free](../.github/images/get_for_free.png)
+
+**Setp.2: Register Or Login** 
+
+![Register or Login](../.github/images/register_or_login.png)
+
+**Setp.3: Get APP_ID and  APP_SECRET** 
+
+![Register or Login](../.github/images/get_appid_secret.png)
+
+> see [MATRIX STORAGE](https://storage.anmaicloud.com/?lang=en)  `OPENAPI Docs` for more detail.
 
 #### Usage ####
 
