@@ -25,22 +25,6 @@ HTTP_TIME_OUT=30000
 
 ```
 
-##### Get your APP_ID and  APP_SECRET#####
-
-**Setp.1: Get Account for free** 
-
-![Get for Free](../.github/images/get_for_free.png)
-
-**Setp.2: Register Or Login** 
-
-![Register or Login](../.github/images/register_or_login.png)
-
-**Setp.3: Get APP_ID and  APP_SECRET** 
-
-![Register or Login](../.github/images/get_appid_secret.png)
-
-> see [MATRIX STORAGE](https://storage.anmaicloud.com/?lang=en)  `OPENAPI Docs` for more detail.
-
 #### Usage ####
 
 ```bash
@@ -98,6 +82,21 @@ result = await client.getOne( { cid: 'QmUzA3j2VBbmajMVJwCL5JYim86WaJuAj5B4HVWpFy
 console.log(JSON.stringify(result, null , 4));
 console.debug('end getOneTest');
 
-
-
 ```
+
+#### Get your APP_ID and  APP_SECRET ####
+
+**Setp.1: Get Account for free** 
+
+![Get for Free](../.github/images/get_for_free.png)
+
+**Setp.2: Register Or Login** 
+
+![Register or Login](../.github/images/register_or_login.png)
+
+**Setp.3: Get APP_ID and  APP_SECRET** 
+
+![Register or Login](../.github/images/get_appid_secret.png)
+
+> see [MATRIX STORAGE](https://storage.anmaicloud.com/?lang=en)  `OPENAPI Docs` for more detail.
+
