@@ -96,7 +96,7 @@ console.debug('end getOneTest');
 
 **Setp.3: Get APP_ID and  APP_SECRET** 
 
-![Register or Login](../.github/images/get_appid_secret.png)
+![Register or Login](../.github/images/get_appid_secret.jpeg)
 
 > see [MATRIX STORAGE](https://storage.anmaicloud.com/?lang=en)  `OPENAPI Docs` for more detail.
 
