@@ -25,8 +25,8 @@ class MatrixStorageAPI extends API {
 
     const resp = res.data;
     ctx.helper.throwMatrixStorageAPIError(resp);
-    const {objs:items,...others} = resp.data;
-    return {items,...others};
+    const { objs: items, ...others } = resp.data;
+    return { items, ...others };
   }
 
   async file_detail(condition) {
@@ -54,7 +54,7 @@ class MatrixStorageAPI extends API {
       }
     }
 
-    return resp_data ? resp_data.objs || [resp_data] : [];
+    return resp_data ? resp_data.objs || [ resp_data ] : [];
   }
 
   async ask_for_upload_credential(params) {

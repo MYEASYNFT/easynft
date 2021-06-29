@@ -13,7 +13,8 @@ const urlencode = require('urlencode');
 
 const { Service } = require('egg');
 
-const PENDING_STATUS = [ 6, 9, 8, 10 ];
+const PENDING_STATUS = [ 6, 9 ];
+const FAIL_STATUS = [ 8, 10, 3, 4 ];
 
 class NFTMetadataService extends Service {
 
@@ -121,7 +122,11 @@ class NFTMetadataService extends Service {
   async getOne({ cid, store_host, ...opts }) {
 
     if (PENDING_STATUS.includes(opts.status)) {
-        return { cid, create_at:opts.create_at,status: 'pending' };
+      return { cid, create_at: opts.create_at, status: 'pending' };
+    }
+
+    if (FAIL_STATUS.includes(opts.status)) {
+      return { cid, create_at: opts.create_at, status: 'fail' };
     }
 
     const { ctx, config } = this;
@@ -136,7 +141,7 @@ class NFTMetadataService extends Service {
     let status = 'complete';
     let totalSize = 0;
     for (const file of metadata.properties.files) {
-      
+
       const [ stat ] = await ctx.httpAPI.MatrixStorage.file_detail({
         bucket_name: config.easynft.maxtrix_storage.bucketName,
         cid: file.cid,
@@ -152,12 +157,15 @@ class NFTMetadataService extends Service {
       if (PENDING_STATUS.includes(stat.status)) {
         status = 'pending';
       }
+      if (FAIL_STATUS.includes(stat.status)) {
+        status = 'fail';
+      }
       const fileSize = parseInt(stat.file_size || stat.size);
-      totalSize += isNaN(fileSize)?0:fileSize;
-      
+      totalSize += isNaN(fileSize) ? 0 : fileSize;
+
     }
 
-    return { cid, metadata,size:totalSize,create_at:opts.create_at, status };
+    return { cid, metadata, size: totalSize, create_at: opts.create_at, status };
   }
 
   async findOne(cid) {
@@ -193,9 +201,9 @@ class NFTMetadataService extends Service {
       return stats;
     }
 
-    const {items,...others} = stats;
+    const { items, ...others } = stats;
     const res = await Promise.all(items.map(_ => this.getOne(_)));
-    return {items:res,...others};
+    return { items: res, ...others };
   }
 }
 

@@ -27,8 +27,8 @@ describe('egg-plugin:easynft.test.js', () => {
   after(() => app.close());
   afterEach(mock.restore);
 
-  const complete_status = [ 11, 0, 1, 2, 3, 5 ];
-  const pending_status = [ 6, 9, 8, 10 ];
+  const complete_status = [ 11, 0, 1, 2, 5 ];
+  const pending_status = [ 6, 9 ];
 
   describe('GET /easynft', () => {
 
@@ -49,20 +49,21 @@ describe('egg-plugin:easynft.test.js', () => {
 
         const file_status = i % 2 === 1 ? complete_status : pending_status;
         const cid = faker.datatype.hexaDecimal(32);
-        const file = { cid, store_host: faker.internet.url(), status: file_status[faker.datatype.number(file_status.length - 1)] };
+        const file = { cid, create_at: faker.datatype.string(), store_host: faker.internet.url(), status: file_status[faker.datatype.number(file_status.length - 1)] };
         const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
 
         const imageFile_status = i % 3 === 1 ? complete_status : pending_status;
-        const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: imageFile_status[faker.datatype.number(imageFile_status.length - 1)] };
+        const imageFile = { cid: image.cid, file_size: faker.datatype.number(), store_host: faker.internet.url(), status: imageFile_status[faker.datatype.number(imageFile_status.length - 1)] };
 
         const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: { files: [ image ] }, decimals: faker.datatype.number(10000000000000000000) };
 
         items.push(file);
-        const entity = { cid, status: file_status === complete_status && imageFile_status === complete_status ? 'complete' : 'pending' };
+        const entity = { cid, create_at: file.create_at, status: file_status === complete_status && imageFile_status === complete_status ? 'complete' : 'pending' };
 
         if (file_status === complete_status) {
 
           entity.metadata = metadata;
+          entity.size = imageFile.file_size;
           nock(file.store_host, {
             from,
             appid: appId,
@@ -118,7 +119,7 @@ describe('egg-plugin:easynft.test.js', () => {
       await app.httpRequest()
         .get(config.basePath)
         .query({ page_index: page, page_size: size })
-        .expect(200, res);
+        .expect(200, { code: 0, msg: 'ok', data: { items: res } });
 
     });
 
@@ -134,9 +135,9 @@ describe('egg-plugin:easynft.test.js', () => {
       const signature = faker.datatype.string(64);
       const from = 'openapi';
       const file_name = 'metadata';
-      const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
+      const file = { cid, create_at: faker.datatype.string(), store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
       const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
-      const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
+      const imageFile = { cid: image.cid, file_size: faker.datatype.number(), store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
 
       const metadata = { name: faker.datatype.string(10), description: faker.random.words(), image: `ipfs://${image.cid}`, properties: { files: [ image ] }, decimals: faker.datatype.number(10000000000000000000) };
 
@@ -191,7 +192,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
       await app.httpRequest()
         .get(`${config.basePath}/${cid}`)
-        .expect(200, { cid, metadata, status: 'complete' });
+        .expect(200, { code: 0, msg: 'ok', data: { cid, metadata, status: 'complete', size: imageFile.file_size, create_at: file.create_at } });
     });
 
     it('pending', async () => {
@@ -202,7 +203,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const signature = faker.datatype.string(64);
       const from = 'openapi';
       const file_name = 'metadata';
-      const file = { cid, store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
+      const file = { cid, create_at: faker.datatype.string(), store_host: faker.internet.url(), status: complete_status[faker.datatype.number(complete_status.length - 1)] };
       const image = { cid: faker.datatype.hexaDecimal(32), filename: faker.system.fileName() };
       const imageFile = { cid: image.cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)] };
 
@@ -259,7 +260,7 @@ describe('egg-plugin:easynft.test.js', () => {
 
       await app.httpRequest()
         .get(`${config.basePath}/${cid}`)
-        .expect(200, { cid, metadata, status: 'pending' });
+        .expect(200, { code: 0, msg: 'ok', data: { cid, metadata, status: 'pending', size: 0, create_at: file.create_at } });
     });
 
     it('pending without metadata', async () => {
@@ -270,7 +271,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const signature = faker.datatype.string(64);
       const from = 'openapi';
       const file_name = 'metadata';
-      const file = { cid, store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)], decimals: faker.datatype.number(10000000000000000000) };
+      const file = { cid, create_at: faker.datatype.string(), store_host: faker.internet.url(), status: pending_status[faker.datatype.number(pending_status.length - 1)], decimals: faker.datatype.number(10000000000000000000) };
 
       nock(config.maxtrix_storage.host, {
         'content-type': 'application/x-www-form-urlencoded',
@@ -295,9 +296,8 @@ describe('egg-plugin:easynft.test.js', () => {
 
       await app.httpRequest()
         .get(`${config.basePath}/${cid}`)
-        .expect(200, { cid, status: 'pending' });
+        .expect(200, { code: 0, msg: 'ok', data: { cid, status: 'pending', create_at: file.create_at } });
     });
-
 
   });
 
@@ -418,7 +418,7 @@ describe('egg-plugin:easynft.test.js', () => {
         .post(config.basePath)
         .field(fields)
         .attach('file', file_content, filename)
-        .expect(201, { cid, metadata, status: 'pending' });
+        .expect(201, { code: 0, msg: 'ok', data: { cid, metadata, status: 'pending' } });
     });
 
   });
