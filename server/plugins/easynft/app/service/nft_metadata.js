@@ -14,7 +14,7 @@ const urlencode = require('urlencode');
 const { Service } = require('egg');
 
 const PENDING_STATUS = [ 6, 9 ];
-const FAIL_STATUS = [ 8, 10, 3, 4 ];
+const FAIL_STATUS = [ 8, 10 ];
 
 class NFTMetadataService extends Service {
 
@@ -125,7 +125,7 @@ class NFTMetadataService extends Service {
       return { cid, create_at: opts.create_at, status: 'pending' };
     }
 
-    if (FAIL_STATUS.includes(opts.status)) {
+    if (!cid || FAIL_STATUS.includes(opts.status)) {
       return { cid, create_at: opts.create_at, status: 'fail' };
     }
 
