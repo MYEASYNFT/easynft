@@ -30,8 +30,8 @@ class NFTMetadataService extends Service {
       const fileCID = await ctx.helper.generateCID(fileStream);
       fileStream.destroy();
 
-      fileInfos.push({ cid: fileCID, filename: file.filename });
-      _files.push({ cid: fileCID, file });
+      fileInfos.push({ cid: fileCID.toString(), filename: file.filename });
+      _files.push({ cid: fileCID.toString(), file });
       images.push(`ipfs://${fileCID}`);
     }
 
@@ -47,7 +47,7 @@ class NFTMetadataService extends Service {
 
     const [ metadataStat ] = await await ctx.httpAPI.MatrixStorage.file_detail({
       bucket_name: config.easynft.maxtrix_storage.bucketName,
-      cid,
+      cid: cid.toString(),
       file_name: 'metadata',
       page_index: 1,
       page_size: 1,
@@ -59,7 +59,7 @@ class NFTMetadataService extends Service {
     const promises = _files.map(_ => this.upload(_.cid, _.file));
     await Promise.all(promises);
     await this.upload(cid, metadata_buffer);
-    return { cid, metadata, status: 'pending' };
+    return { cid: cid.toString(), metadata, status: 'pending' };
   }
 
   async upload(cid, data) {
@@ -79,7 +79,7 @@ class NFTMetadataService extends Service {
     } else {
       const info_list = await ctx.httpAPI.MatrixStorage.file_detail({
         bucket_name: config.easynft.maxtrix_storage.bucketName,
-        cid,
+        cid: cid.toString(),
         page_index: 1,
         page_size: 1,
       });

@@ -6,38 +6,27 @@
  */
 'use strict';
 
+const { Readable } = require('stream');
 const createError = require('http-errors');
-// const multihashes = require('multihashes');
-// const CID = require('cids');
-const { create: createClient } = require('ipfs-http-client');
+const { CID_GENERATOR } = require('../../constants');
 
-// const crypto = require('crypto');
-// const { Readable } = require('stream');
+async function* transform(stream) {
+  for await (const chunk of stream) {
+    yield new Uint8Array(chunk);
+  }
+}
 
 async function generateCID(data) {
 
-  const { url, ...opts } = this.config.easynft.ipfs;
-  const client = createClient(url);
-  const res = await client.add(data, opts);
-  return res.path;
-
-  // / TODO: generate cid in local
-  // const opts = this.config.easynft.multihashes;
-  // const hash = crypto.createHash(opts.algorithm);
-  // if (Buffer.isBuffer(data)) {
-  //   hash.update(data);
-  // } else if (data instanceof Readable) {
-  //   for await (const chunk of data) {
-  //     hash.update(chunk);
-  //   }
-  // } else {
-  //   throw new Error('UNSUPPORT_DATA');
-  // }
-  // const buffer = hash.digest();
-
-  // const content = multihashes.encode(buffer, opts.hashName);
-  // const cid = new CID(opts.version, opts.codec, content, opts.multibaseName);
-  // return cid.toString();
+  /**  @type import('ipfs-cid').ComposeGenerator **/
+  const generator = this.ctx[CID_GENERATOR];
+  if (Buffer.isBuffer(data)) {
+    return await generator.generate([ new Uint8Array(data) ]);
+  }
+  if (data instanceof Readable) {
+    return await generator.generate(transform(data));
+  }
+  throw new Error('UNSUPPORT_DATA');
 
 }
 

@@ -57,10 +57,12 @@ exports.easynft = {
         },
         proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_ => _.toLowerCase()),
     },
-    ipfs: {
-        url: 'http://st-ipfsmanager.bingheyc.com',
-        pin: true,
-        chunker: 'size-1048576',
+    cid:{
+        chunk: 1048576,
+        algHashName: 'sha2-256',
+        version: 0,
+        codec: 'dag-pb',
+        multibaseName: 'base58btc'
     }
 };
 ```

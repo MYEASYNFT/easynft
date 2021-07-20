@@ -310,7 +310,7 @@ describe('egg-plugin:easynft.test.js', () => {
       const filename = faker.system.fileName() + '.jpg';
       const file_content = Buffer.from(faker.random.words());
       const file_cid = await ctx.helper.generateCID(file_content);
-      const metadata = { ...fields, image: `ipfs://${file_cid}`, properties: { files: [{ cid: file_cid, filename }] } };
+      const metadata = { ...fields, image: `ipfs://${file_cid.toString()}`, properties: { files: [{ cid: file_cid.toString(), filename }] } };
       const cid = await ctx.helper.generateCID(Buffer.from(JSONbig.stringify(metadata)));
 
       const appId = faker.datatype.string(16);
@@ -331,7 +331,7 @@ describe('egg-plugin:easynft.test.js', () => {
       })
         .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
-          cid,
+          cid: cid.toString(),
           file_name,
           page_index: 1,
           page_size: 1,
@@ -347,7 +347,7 @@ describe('egg-plugin:easynft.test.js', () => {
       })
         .post(`${config.maxtrix_storage.basePath}/file_detail`, {
           bucket_name: config.maxtrix_storage.bucketName,
-          cid: file_cid,
+          cid: file_cid.toString(),
           page_index: 1,
           page_size: 1,
         }).once()
@@ -418,7 +418,7 @@ describe('egg-plugin:easynft.test.js', () => {
         .post(config.basePath)
         .field(fields)
         .attach('file', file_content, filename)
-        .expect(201, { code: 0, msg: 'ok', data: { cid, metadata, status: 'pending' } });
+        .expect(201, { code: 0, msg: 'ok', data: { cid: cid.toString(), metadata, status: 'pending' } });
     });
 
   });
