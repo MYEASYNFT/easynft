@@ -1,6 +1,6 @@
 /**
- * @fileOverview 上下文扩展
- * @name context.js
+ * @fileOverview app扩展
+ * @name application.js
  * @author kiba.x.zhao <kiba.rain@qq.com>
  * @license MIT
  */
@@ -8,6 +8,7 @@
 
 const { CID_GENERATOR } = require('../../constants');
 const { createGenerator } = require('ipfs-cid');
+const { BufferGenerator } = require('ipfs-cid/extensions/buffer');
 
 const GENERATOR = Symbol('GENERATOR');
 
@@ -19,7 +20,9 @@ module.exports = {
    */
   get [CID_GENERATOR]() {
     if (!this[GENERATOR]) {
-      this[GENERATOR] = createGenerator(this.app.config.easynft.cid);
+      const generator = createGenerator(this.config.easynft.cid);
+      generator.mount(BufferGenerator.createInstance());
+      this[GENERATOR] = generator;
     }
     return this[GENERATOR];
   },

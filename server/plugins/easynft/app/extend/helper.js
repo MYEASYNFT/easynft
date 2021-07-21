@@ -10,21 +10,15 @@ const { Readable } = require('stream');
 const createError = require('http-errors');
 const { CID_GENERATOR } = require('../../constants');
 
-async function* transform(stream) {
-  for await (const chunk of stream) {
-    yield new Uint8Array(chunk);
-  }
-}
-
 async function generateCID(data) {
 
   /**  @type import('ipfs-cid').ComposeGenerator **/
-  const generator = this.ctx[CID_GENERATOR];
+  const generator = this.app[CID_GENERATOR];
   if (Buffer.isBuffer(data)) {
     return await generator.generate([ new Uint8Array(data) ]);
   }
   if (data instanceof Readable) {
-    return await generator.generate(transform(data));
+    return await generator.generate(data);
   }
   throw new Error('UNSUPPORT_DATA');
 
