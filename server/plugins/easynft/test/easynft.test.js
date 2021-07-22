@@ -64,17 +64,8 @@ describe('egg-plugin:easynft.test.js', () => {
 
           entity.metadata = metadata;
           entity.size = imageFile.file_size;
-          nock(file.store_host, {
-            from,
-            appid: appId,
-            appversion: appVersion,
-            signature,
-          })
-            .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
-            .query({
-              bucket_name: config.maxtrix_storage.bucketName,
-              cid,
-            })
+          nock(config.ipfs.host)
+            .get(`${config.ipfs.basePath}/${cid}`)
             .reply(200, Buffer.from(JSON.stringify(metadata)), { 'Content-Disposition': `attachment; filename="${image.filename}"` });
 
           nock(config.maxtrix_storage.host, {
@@ -156,18 +147,8 @@ describe('egg-plugin:easynft.test.js', () => {
           page_size: 1,
         }).reply(200, { code: 0, msg: 'ok', data: { objs: [ file ] } });
 
-
-      nock(file.store_host, {
-        from,
-        appid: appId,
-        appversion: appVersion,
-        signature,
-      })
-        .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
-        .query({
-          bucket_name: config.maxtrix_storage.bucketName,
-          cid,
-        })
+      nock(config.ipfs.host)
+        .get(`${config.ipfs.basePath}/${cid}`)
         .reply(200, Buffer.from(JSON.stringify(metadata)), { 'Content-Disposition': `attachment; filename="${image.filename}"` });
 
       nock(config.maxtrix_storage.host, {
@@ -225,17 +206,8 @@ describe('egg-plugin:easynft.test.js', () => {
         }).reply(200, { code: 0, msg: 'ok', data: { objs: [ file ] } });
 
 
-      nock(file.store_host, {
-        from,
-        appid: appId,
-        appversion: appVersion,
-        signature,
-      })
-        .get(`${config.maxtrix_storage.storeBasePath}/download_file`)
-        .query({
-          bucket_name: config.maxtrix_storage.bucketName,
-          cid,
-        })
+      nock(config.ipfs.host)
+        .get(`${config.ipfs.basePath}/${cid}`)
         .reply(200, Buffer.from(JSON.stringify(metadata)), { 'Content-Disposition': `attachment; filename="${image.filename}"` });
 
       nock(config.maxtrix_storage.host, {

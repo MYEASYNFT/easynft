@@ -8,7 +8,7 @@
 exports.easynft = {
   basePath: '/easynft',
   maxtrix_storage: {
-    host: 'http://teststc-api.atpool.com',
+    host: 'https://prestc-api.bingheyc.com',
     basePath: '/store/openapi/v1',
     storeBasePath: '/store/openapi/v1',
     bucketName: '$nft',
@@ -24,6 +24,10 @@ exports.easynft = {
     version: 0,
     codec: 'dag-pb',
     multibaseName: 'base58btc',
+  },
+  ipfs: {
+    host: 'https://prest-ip.bingheyc.com:8081',
+    basePath: '/ipfs',
   },
 };
 

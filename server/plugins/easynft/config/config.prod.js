@@ -26,6 +26,14 @@ module.exports = () => {
     config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',').map(_ => _.toLowerCase());
   }
 
+  if (process.env.EASYNFT_IPFS_HOST) {
+    config.easynft.ipfs.host = process.env.EASYNFT_IPFS_HOST;
+  }
+
+  if (process.env.EASYNFT_IPFS_BASE_PATH) {
+    config.easynft.ipfs.basePath = process.env.EASYNFT_IPFS_BASE_PATH;
+  }
+
   return {
     ...config,
   };

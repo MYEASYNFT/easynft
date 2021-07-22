@@ -119,7 +119,7 @@ class NFTMetadataService extends Service {
 
   }
 
-  async getOne({ cid, store_host, ...opts }) {
+  async getOne({ cid, ...opts }) {
 
     if (PENDING_STATUS.includes(opts.status)) {
       return { cid, create_at: opts.create_at, status: 'pending' };
@@ -131,11 +131,10 @@ class NFTMetadataService extends Service {
 
     const { ctx, config } = this;
 
-    const metadata_buffer = await ctx.httpAPI.MatrixStorage.download_file({
-      bucket_name: config.easynft.maxtrix_storage.bucketName,
+    const metadata_buffer = await ctx.httpAPI.Ipfs.get({
       cid,
-      store_host,
     });
+
     const metadata = JSONbig.parse(metadata_buffer.toString('utf8'));
 
     let status = 'complete';
