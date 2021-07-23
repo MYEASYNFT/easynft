@@ -17,7 +17,7 @@
     "bignumber.js": "^9.0.1",
     "cids": "^1.1.6",
     "http-errors": "^1.8.0",
-    "ipfs-cid": "git+https://github.com/MatrixStorageTech2021/ipfs-cid.git",
+    "ipfs-cid": "^0.1.0",
     "json-bigint": "^1.0.0",
     "urlencode": "^1.1.0"
   },
