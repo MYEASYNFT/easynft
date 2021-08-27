@@ -16,7 +16,7 @@ exports.easynft = {
       'Content-Type': 'application/x-www-form-urlencoded',
       From: 'openapi',
     },
-    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_ => _.toLowerCase()),
+    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature', 'From' ].map(_ => _.toLowerCase()),
   },
   cid: {
     chunk: 1048576,
@@ -28,6 +28,7 @@ exports.easynft = {
   ipfs: {
     host: 'https://prest-ip.bingheyc.com:8081',
     basePath: '/ipfs',
+    timeout: 5000,
   },
 };
 

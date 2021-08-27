@@ -13,11 +13,21 @@ class IpfsAPI extends API {
   async get(params) {
 
     const { ctx, app, config } = this;
-    const res = await app.curl(`${config.easynft.ipfs.host}${config.easynft.ipfs.basePath}/${params.cid}`, {
-      method: 'GET',
-      timeout: 60000,
-    });
-    ctx.helper.throwHttpError(res);
+    let res;
+    try {
+      res = await app.curl(`${config.easynft.ipfs.host}${config.easynft.ipfs.basePath}/${params.cid}`, {
+        method: 'GET',
+        timeout: config.easynft.ipfs.timeout,
+      });
+      ctx.helper.throwHttpError(res);
+    } catch (e) {
+
+      if (!e || e.name !== 'ResponseTimeoutError' || e.status !== -1) {
+        throw e;
+      }
+      res = { data: null };
+    }
+
 
     return res.data;
 

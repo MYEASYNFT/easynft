@@ -7,13 +7,13 @@ module.exports = {
   //   enable: true,
   // }
 
-  easynft:{
+  easynft: {
     package: 'egg-easynft',
-    enable:true
+    enable: true,
   },
 
-  httpLogger:{
+  httpLogger: {
     enable: true,
-    package: 'egg-http-logger'
-  }
+    package: 'egg-http-logger',
+  },
 };
