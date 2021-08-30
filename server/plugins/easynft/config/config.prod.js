@@ -34,6 +34,10 @@ module.exports = () => {
     config.easynft.ipfs.basePath = process.env.EASYNFT_IPFS_BASE_PATH;
   }
 
+  if (process.env.EASYNFT_IPFS_TIMEOUT) {
+    config.easynft.ipfs.timeout = parseInt(process.env.EASYNFT_IPFS_TIMEOUT);
+  }
+
   return {
     ...config,
   };

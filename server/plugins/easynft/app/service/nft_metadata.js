@@ -130,10 +130,15 @@ class NFTMetadataService extends Service {
     }
 
     const { ctx, config } = this;
-
     const metadata_buffer = await ctx.httpAPI.Ipfs.get({
       cid,
     });
+    if (metadata_buffer === null) {
+      process.nextTick(() => {
+        ctx.httpAPI.MatrixStorage.extract_file({ bucket_name: config.easynft.maxtrix_storage.bucketName, cid });
+      });
+      return { cid, create_at: opts.create_at, status: 'recovering' };
+    }
 
     const metadata = JSONbig.parse(metadata_buffer.toString('utf8'));
 

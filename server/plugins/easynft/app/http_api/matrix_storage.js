@@ -106,6 +106,25 @@ class MatrixStorageAPI extends API {
 
   }
 
+  async extract_file(params) {
+
+    const { ctx, app, config } = this;
+    const headers = ctx.helper.generateMatrixStorageAPIHeaders();
+
+    const res = await app.curl(`${config.easynft.maxtrix_storage.host}${config.easynft.maxtrix_storage.basePath}/extract_file`, {
+      dataType: 'json',
+      method: 'POST',
+      headers,
+      data: params,
+    });
+    ctx.helper.throwHttpError(res);
+
+    const resp = res.data;
+    ctx.helper.throwMatrixStorageAPIError(resp);
+
+    return resp.data;
+  }
+
   async download_file(params) {
 
     const { ctx, app, config } = this;
