@@ -8,7 +8,7 @@
 exports.easynft = {
   basePath: '/easynft',
   maxtrix_storage: {
-    host: 'http://teststc-api.atpool.com',
+    host: 'https://prestc-api.bingheyc.com',
     basePath: '/store/openapi/v1',
     storeBasePath: '/store/openapi/v1',
     bucketName: '$nft',
@@ -16,19 +16,19 @@ exports.easynft = {
       'Content-Type': 'application/x-www-form-urlencoded',
       From: 'openapi',
     },
-    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature' ].map(_ => _.toLowerCase()),
+    proxyHeaders: [ 'AppId', 'AppVersion', 'Signature', 'From' ].map(_ => _.toLowerCase()),
   },
-  multihashes: {
-    algorithm: 'sha256',
-    hashName: 'sha2-256',
+  cid: {
+    chunk: 1048576,
+    algHashName: 'sha2-256',
     version: 0,
     codec: 'dag-pb',
     multibaseName: 'base58btc',
   },
   ipfs: {
-    url: 'http://st-ipmanager.bingheyc.com',
-    pin: true,
-    chunker: 'size-1048576',
+    host: 'https://prest-ip.bingheyc.com:8081',
+    basePath: '/ipfs',
+    timeout: 5000,
   },
 };
 

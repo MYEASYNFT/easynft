@@ -26,12 +26,16 @@ module.exports = () => {
     config.easynft.maxtrix_storage.proxyHeaders = process.env.EASYNFT_MAXTRIX_STORAGE_PROXY_HEADERS.split(',').map(_ => _.toLowerCase());
   }
 
-  if (process.env.EASYNFT_IPFS_URL) {
-    config.easynft.ipfs.url = process.env.EASYNFT_IPFS_URL;
+  if (process.env.EASYNFT_IPFS_HOST) {
+    config.easynft.ipfs.host = process.env.EASYNFT_IPFS_HOST;
   }
 
-  if (process.env.EASYNFT_IPFS_CHUNKER) {
-    config.easynft.ipfs.chunker = process.env.EASYNFT_IPFS_CHUNKER;
+  if (process.env.EASYNFT_IPFS_BASE_PATH) {
+    config.easynft.ipfs.basePath = process.env.EASYNFT_IPFS_BASE_PATH;
+  }
+
+  if (process.env.EASYNFT_IPFS_TIMEOUT) {
+    config.easynft.ipfs.timeout = parseInt(process.env.EASYNFT_IPFS_TIMEOUT);
   }
 
   return {

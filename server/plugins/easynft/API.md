@@ -181,6 +181,27 @@ Date: Wed, 22 Feb 2012 08:32:21 GMT
 
 ```
 
+** RECOVER IMAGE UPLOAD STATUS **
+
+cid not found on ipfs, try to extract from filecoin
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Connection: keep-alive
+Date: Wed, 22 Feb 2012 08:32:21 GMT
+
+{
+    "code":0,
+    "msg":"ok",
+    "data":{
+        "cid":"maxasin69ets85wve0ipva5m5b2maqaz8lme08peag2mxcsuv",
+        "status":"recovering"
+    }
+}
+
+```
+
 ### CREATE METADATA ###
 
 `POST /easynft`
