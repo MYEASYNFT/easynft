@@ -1,6 +1,6 @@
 # easynft-server
 
-[NFT](https://en.wikipedia.org/wiki/Non-fungible_token) server for generate metadata by upload file, and  store them (file and metadata)  in [ipfs](https://ipfs.io/) and [filecoin](https://filecoin.io/)
+[NFT](https://en.wikipedia.org/wiki/Non-fungible_token) server for generate metadata by upload file, and  store them (file and metadata)  in [ipfs](https://ipfs.io/)
 
 ## QuickStart
 

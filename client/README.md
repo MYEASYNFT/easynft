@@ -94,5 +94,5 @@ console.debug('end getOneTest');
 
 ![Register or Login](../.github/images/get_appid_secret.jpeg)
 
-> see [MATRIX STORAGE](https://storage.anmaicloud.com/?lang=en)  `OPENAPI Docs` for more detail.
+> see [EASYNFT](https://user.easynft.dev/login) for more detail.
 
