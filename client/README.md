@@ -92,7 +92,7 @@ console.debug('end getOneTest');
 
 **Step.2: Get APP_ID and  APP_SECRET** 
 
-![Register or Login](../.github/images/get_appid_secret.jpeg)
+![Register or Login](../.github/images/get_appid_secret.png)
 
 > see [EASYNFT](https://user.easynft.dev/login) for more detail.
 
