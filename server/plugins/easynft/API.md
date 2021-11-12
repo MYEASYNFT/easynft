@@ -9,9 +9,9 @@ easynft api document
 
 | Name       | Required                     | Type   | Description                                                         |
 |------------|------------------------------|--------|---------------------------------------------------------------------|
-| AppId      | <font color="red">yes</font> | string | the AppId of [Matrix Storage](https://user.easynft.dev/login)      |
-| AppVersion | <font color="red">yes</font> | string | the AppVersion of [Matrix Storage](https://user.easynft.dev/login) |
-| Signature  | <font color="red">yes</font> | string | the Signature of [Matrix Storage](https://user.easynft.dev/login)  |
+| AppId      | <font color="red">yes</font> | string | the AppId of [Easy NFT](https://user.easynft.dev/login)      |
+| AppVersion | <font color="red">yes</font> | string | the AppVersion of [Easy NFT](https://user.easynft.dev/login) |
+| Signature  | <font color="red">yes</font> | string | the Signature of [Easy NFT](https://user.easynft.dev/login)  |
 |            |                              |        |                                                                     |
 
 #### REQUEST QUERY ####
@@ -66,9 +66,9 @@ Date: Wed, 22 Feb 2012 08:32:21 GMT
 
 | Name       | Required                     | Type   | Description                                                         |
 |------------|------------------------------|--------|---------------------------------------------------------------------|
-| AppId      | <font color="red">yes</font> | string | the AppId of [Matrix Storage](https://user.easynft.dev/login)      |
-| AppVersion | <font color="red">yes</font> | string | the AppVersion of [Matrix Storage](https://user.easynft.dev/login) |
-| Signature  | <font color="red">yes</font> | string | the Signature of [Matrix Storage](https://user.easynft.dev/login)  |
+| AppId      | <font color="red">yes</font> | string | the AppId of [Easy NFT](https://user.easynft.dev/login)      |
+| AppVersion | <font color="red">yes</font> | string | the AppVersion of [Easy NFT](https://user.easynft.dev/login) |
+| Signature  | <font color="red">yes</font> | string | the Signature of [Easy NFT](https://user.easynft.dev/login)  |
 |            |                              |        |                                                                     |
 
 #### REQUEST PATH PARAMS ####
